@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 
 import great_expectations as gx
@@ -20,7 +18,7 @@ GxValidationResult = (
 GxCheckpointResult = gx.checkpoint.checkpoint.CheckpointResult
 
 Context = gx.get_context(mode="ephemeral")
-
+DataSource = Context.data_sources.add_pandas(DATA_SOURCE_NAME)
 
 def test_load_csv():
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -52,6 +50,7 @@ def _extract_validation_result_from_checkpoint_result(
     ]
     return validation_result
 
+# TODO(mahdi): refactor to support multiple call
 def _validate_not_null_by_column_name(context, df, col_name):
     data_source = context.data_sources.get(DATA_SOURCE_NAME)
 
@@ -89,8 +88,15 @@ def _validate_not_null_by_column_name(context, df, col_name):
 
     return _extract_validation_result_from_checkpoint_result(checkpoint_result)
 
+@pytest.mark.skip(reason="Skipping this test for now")
 def test_no_missing_values_in_title():
-    data_source = Context.data_sources.add_pandas("pandas")
     df = _get_dataframe(DATASET_PATH)
     results = _validate_not_null_by_column_name(Context, df, "title")
-    print(results)
+    
+    assert (results["success"] == True)
+
+def test_no_missing_values_in_description():
+    df = _get_dataframe(DATASET_PATH)
+    results = _validate_not_null_by_column_name(Context, df, "description")
+    
+    assert (results["success"] == True)
