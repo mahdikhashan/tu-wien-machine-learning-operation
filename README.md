@@ -23,6 +23,10 @@ to make sure the flow of data is consistent and data passes the minimum required
 | `test_validate_column_in_range` (`max_salary`) | Ensures salaries are within a reasonable range.        | `0.0` (no negative salaries) to `1,000,000.0`.      |
 | `test_validate_column_values_in_list` (`pay_period`) | Ensures `pay_period` contains only valid values.   | Must be one of: `["BIWEEKLY", "HOURLY", "MONTHLY", "WEEKLY", "YEARLY"]`. |
 
+### Dataset 
+
+1. https://www.kaggle.com/datasets/arshkon/linkedin-job-postings
+
 ---
 TODO:
 - [ ] refactor `test_dataset_quality.py` file and keep create abstraction layer for expectation wrappers
