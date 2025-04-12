@@ -2,3 +2,11 @@
 .idea
 *.log
 tmp/
+
+venv/
+.ipynb_checkpoints/
+.metaflow/
+.pytest_cache/
+.vscode/
+
+**/__pycache__/
