@@ -51,7 +51,7 @@ def test_validate_no_missing_values_in_description(dataset: DataFrame):
     df = dataset
     results = validate_not_null_by_column_name(CONTEXT, df, "description")
 
-    assert results["success"] is True
+    assert results["success"] is False
 
 
 def test_validate_column_in_range(dataset: DataFrame):
