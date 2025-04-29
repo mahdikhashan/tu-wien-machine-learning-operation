@@ -1,0 +1,7 @@
+FROM python:3.11.0-alpine
+
+WORKDIR /tests
+
+COPY requirements-test.txt .
+
+RUN pip install -r requirements-test.txt
