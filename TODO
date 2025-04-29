@@ -1,0 +1,10 @@
+- [ ] use argo workflow
+- [ ] implement docker for the test step
+- [ ] train model in the second step
+- [ ] add eveluation for robustness
+- [ ] add a branch with artificial error, and see the results in the flow steps
+- [ ] document the argumentation for each step in a doc
+- [ ] create flow for feature engineering
+- [ ] create a mechanism to introcude drift in data
+- [ ] attach model versioning with CometML
+- [ ] add logs to monitor when it makes sense and push to CometML
