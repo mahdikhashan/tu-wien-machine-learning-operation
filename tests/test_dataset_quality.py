@@ -21,14 +21,13 @@ def test_validate_no_missing_values_in_title(dataset: DataFrame):
 
 
 def test_validate_no_missing_values_in_description(dataset: DataFrame):
-    df = dataset
-    results = validate_not_null_by_column_name(CONTEXT, df, "description")
+    results = validate_not_null_by_column_name(CONTEXT, dataset, "description")
     assert results["success"]
 
 
 def test_validate_max_salary_in_range(dataset: DataFrame):
     result = validate_column_in_range(CONTEXT, dataset, "max_salary", (0.0, 10000000.0))
-    print(result)
+
     assert result["success"]
 
 
