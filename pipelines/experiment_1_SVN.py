@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 
-class SVNFlow(FlowSpec):
+class BaseFlow(FlowSpec):
     dataset = IncludeFile(
         "dataset",
         is_text=False,
@@ -35,7 +35,7 @@ class SVNFlow(FlowSpec):
     @step
     def dataset_is_large_enough(self):
         try:
-            assert self.validation_df.shape[0] >= 25,000
+            assert self.validation_df.shape[0] >= 25_000
         except Exception:
             raise ValueError("not a suitable dataset, it should have atleast 25k rows")
         
@@ -63,7 +63,7 @@ class SVNFlow(FlowSpec):
         try:
             from tests.conftest import set_data_for_fixture
             print("Successfully imported test fixture setup from tests.conftest.")
-        except ImportError as e:
+        except ImportError:
             exit(10)
 
         if not hasattr(self, "validation_df") or not isinstance(
@@ -91,8 +91,9 @@ class SVNFlow(FlowSpec):
         if not os.path.isdir(test_dir_abs):
             raise FileNotFoundError(f"Tests directory not found: {test_dir_abs}")
 
+        test_name = "test_validate_dataset.py"
         print(f"Running pytest on directory: {test_dir_abs}")
-        pytest_args = [test_dir_abs, "-v", "-s"]
+        pytest_args = [f"{test_dir_abs}/{test_name}", "-v", "-s"]
 
         try:
             exit_code = pytest.main(pytest_args)
@@ -108,12 +109,49 @@ class SVNFlow(FlowSpec):
         else:
             print("Pytest validation successful!")
 
-        self.next(self.end)
+        self.next(self.preprocess_training_data)
+
+    @step
+    def preprocess_training_data(self):
+        pass
+    
+    @step
+    def training_data_quality_check(self):
+        pass
+
+    @step
+    def train_model(self):
+        pass
+
+    @step
+    def evaluate_model(self):
+        pass
 
     @step
     def end(self):
         print(f"Flow '{current.flow_name}' completed successfully.")
 
+
+class SVNFlow(BaseFlow):
+    @step
+    def preprocess_training_data(self):
+        print("preprocess_training_data: done")
+        self.next(self.training_data_quality_check)
+    
+    @step
+    def training_data_quality_check(self):
+        print("training_data_quality_check: done")
+        self.next(self.train_model)
+
+    @step
+    def train_model(self):
+        print("train_model: done")
+        self.next(self.evaluate_model)
+
+    @step
+    def evaluate_model(self):
+        print("evaluate_model: done")
+        self.next(self.end)
 
 if __name__ == "__main__":
     SVNFlow()
