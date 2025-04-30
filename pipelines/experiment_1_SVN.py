@@ -30,6 +30,15 @@ class SVNFlow(FlowSpec):
             print(f"Error loading Parquet file: {e}")
             raise ValueError("Failed to load dataset from Parquet IncludeFile") from e
 
+        self.next(self.dataset_is_large_enough)
+
+    @step
+    def dataset_is_large_enough(self):
+        try:
+            assert self.validation_df.shape[0] >= 25,000
+        except Exception:
+            raise ValueError("not a suitable dataset, it should have atleast 25k rows")
+        
         self.next(self.validate_dataset)
 
     @step
@@ -51,26 +60,16 @@ class SVNFlow(FlowSpec):
         print("Attempting validation setup...")
         print("*" * 40)
 
-        global set_data_for_fixture  # Allow modification of the global function reference
-
         try:
             from tests.conftest import set_data_for_fixture
             print("Successfully imported test fixture setup from tests.conftest.")
         except ImportError as e:
-            print(
-                f"WARNING: Could not import test fixture setup from tests.conftest: {e}"
-            )
-            print(
-                "Proceeding with dummy fixture setup. Tests might fail or be inaccurate."
-            )
-            exit(1000)
+            exit(10)
 
         if not hasattr(self, "validation_df") or not isinstance(
             self.validation_df, pd.DataFrame
         ):
-            raise ValueError(
-                "self.validation_df is not a valid DataFrame. Cannot run validation."
-            )
+            raise ValueError("self.validation_df is not a valid DataFrame. Cannot run validation.")
 
         print("Passing DataFrame to fixture setup mechanism...")
         set_data_for_fixture("validation_df", self.validation_df)
@@ -90,9 +89,6 @@ class SVNFlow(FlowSpec):
         test_dir_abs = os.path.join(project_root, "tests")
 
         if not os.path.isdir(test_dir_abs):
-            print(
-                f"ERROR: Tests directory not found at expected location: {test_dir_abs}"
-            )
             raise FileNotFoundError(f"Tests directory not found: {test_dir_abs}")
 
         print(f"Running pytest on directory: {test_dir_abs}")

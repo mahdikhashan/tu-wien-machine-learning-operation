@@ -1,5 +1,6 @@
 import great_expectations as gx
 import great_expectations.expectations as gxe
+import great_expectations.exceptions as ge_exceptions
 
 
 GX_DATA_CONTEXT = (
@@ -67,14 +68,24 @@ def validate_column_in_range(
 ):
     data_source = context.data_sources.get(data_source_name)
 
-    data_asset = data_source.add_dataframe_asset(name="postings column in range")
-    batch_definition = data_asset.add_batch_definition_whole_dataframe(
-        "postings batch definition"
-    )
+    try:
+        data_asset = data_source.get_asset(name="postings column in range")
+    except LookupError:
+        data_asset = data_source.add_dataframe_asset(name="postings column in range")
 
-    expectation_suite = context.suites.add(
-        gx.ExpectationSuite(name="postings column in range expectations")
-    )
+    try:
+        batch_definition = data_asset.get_batch_definition("postings-batch-definition")
+    except LookupError:
+        batch_definition = data_asset.add_batch_definition_whole_dataframe(
+            "postings-batch-definition"
+        )
+
+    try:
+        expectation_suite = context.suites.get(name="postings-column-in-range-expectations")
+    except ge_exceptions.DataContextError:
+        expectation_suite = context.suites.add(
+            gx.ExpectationSuite(name="postings-column-in-range-expectations")
+        )
 
     expectation_suite.add_expectation(
         gxe.ExpectColumnMaxToBeBetween(
@@ -82,24 +93,32 @@ def validate_column_in_range(
         )
     )
 
-    validation_definition = context.validation_definitions.add(
-        gx.ValidationDefinition(
-            name="postings column in range validation definition",
-            data=batch_definition,
-            suite=expectation_suite,
+    try:
+        validation_definition = context.validation_definitions.get(
+            "postings-column-in-range-validation-definition"
         )
-    )
+    except ge_exceptions.DataContextError:
+        validation_definition = context.validation_definitions.add(
+            gx.ValidationDefinition(
+                name="postings-column-in-range-validation-definition",
+                data=batch_definition,
+                suite=expectation_suite,
+            )
+        )
 
-    checkpoint = context.checkpoints.add(
-        gx.Checkpoint(
-            name="postings column in range checkpoint",
-            validation_definitions=[validation_definition],
-            result_format={
-                "result_format": "COMPLETE",
-                "unexpected_index_column_names": [col_name],
-            },
+    try:
+        checkpoint = context.checkpoints.get("postings-column-in-range-checkpoint")
+    except ge_exceptions.DataContextError:
+        checkpoint = context.checkpoints.add(
+            gx.Checkpoint(
+                name="postings-column-in-range-checkpoint",
+                validation_definitions=[validation_definition],
+                result_format={
+                    "result_format": "COMPLETE",
+                    "unexpected_index_column_names": [col_name],
+                },
+            )
         )
-    )
 
     checkpoint_result = checkpoint.run(batch_parameters={"dataframe": df})
 
@@ -110,38 +129,56 @@ def validate_column_in_range(
 def validate_not_null_by_column_name(context, df, col_name, data_source_name="pandas"):
     data_source = context.data_sources.get(data_source_name)
 
-    data_asset = data_source.add_dataframe_asset(name="postings")
-    batch_definition = data_asset.add_batch_definition_whole_dataframe(
-        "postings batch definition"
-    )
+    try:
+        data_asset = data_source.get_asset(name="postings")
+    except LookupError:
+        data_asset = data_source.add_dataframe_asset(name="postings")
 
-    expectation_suite = context.suites.add(
-        gx.ExpectationSuite(name="postings expectations")
-    )
+    try:
+        batch_definition = data_asset.get_batch_definition("postings-batch-definition")
+    except LookupError:
+        batch_definition = data_asset.add_batch_definition_whole_dataframe(
+            "postings-batch-definition"
+        )
 
+    try:
+        expectation_suite = context.suites.get(name="postings-expectations")
+    except ge_exceptions.DataContextError:
+        expectation_suite = context.suites.add(
+            gx.ExpectationSuite(name="postings-expectations")
+        )
+
+    expectation_suite.add_expectation(gxe.ExpectColumnToExist(column=col_name))
     expectation_suite.add_expectation(
         gxe.ExpectColumnValuesToNotBeNull(column=col_name)
     )
-    expectation_suite.add_expectation(gxe.ExpectColumnToExist(column=col_name))
 
-    validation_definition = context.validation_definitions.add(
-        gx.ValidationDefinition(
-            name="postings validation definition",
-            data=batch_definition,
-            suite=expectation_suite,
+    try:
+        validation_definition = context.validation_definitions.get(
+            "postings-validation-definition"
         )
-    )
+    except ge_exceptions.DataContextError:
+        validation_definition = context.validation_definitions.add(
+            gx.ValidationDefinition(
+                name="postings-validation-definition",
+                data=batch_definition,
+                suite=expectation_suite,
+            )
+        )
 
-    checkpoint = context.checkpoints.add(
-        gx.Checkpoint(
-            name="postings checkpoint",
-            validation_definitions=[validation_definition],
-            result_format={
-                "result_format": "COMPLETE",
-                "unexpected_index_column_names": [col_name],
-            },
+    try:
+        checkpoint = context.checkpoints.get("postings-checkpoint")
+    except ge_exceptions.DataContextError:
+        checkpoint = context.checkpoints.add(
+            gx.Checkpoint(
+                name="postings-checkpoint",
+                validation_definitions=[validation_definition],
+                result_format={
+                    "result_format": "COMPLETE",
+                    "unexpected_index_column_names": [col_name],
+                },
+            )
         )
-    )
 
     checkpoint_result = checkpoint.run(batch_parameters={"dataframe": df})
 
