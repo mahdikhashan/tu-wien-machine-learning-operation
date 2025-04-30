@@ -8,3 +8,6 @@
 - [ ] create a mechanism to introcude drift in data
 - [ ] attach model versioning with CometML
 - [ ] add logs to monitor when it makes sense and push to CometML
+- [ ] i may want to have a feature store - or find an eaiser way to handle model training on different set of data
+- [ ] process the dataset, 
+- [ ] convert the dataset to a parquet type
