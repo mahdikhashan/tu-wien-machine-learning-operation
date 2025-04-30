@@ -22,6 +22,7 @@ def test_validate_no_missing_values_in_title(dataset: DataFrame):
 
 def test_validate_no_missing_values_in_description(dataset: DataFrame):
     results = validate_not_null_by_column_name(CONTEXT, dataset, "description")
+
     assert results["success"]
 
 
