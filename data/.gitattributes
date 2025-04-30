@@ -1,5 +1,0 @@
-. filter=lfs diff=lfs merge=lfs -text
-linkedin-job-posting/postings.csv filter=lfs diff=lfs merge=lfs -text
-linkedin-job-posting/companies filter=lfs diff=lfs merge=lfs -text
-linkedin-job-posting/jobs filter=lfs diff=lfs merge=lfs -text
-linkedin-job-posting/mappings filter=lfs diff=lfs merge=lfs -text
