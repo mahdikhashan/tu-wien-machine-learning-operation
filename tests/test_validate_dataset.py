@@ -27,13 +27,13 @@ def test_validate_no_missing_values_in_description(dataset: DataFrame):
 
 
 def test_validate_max_salary_in_range(dataset: DataFrame):
-    result = validate_column_in_range(CONTEXT, dataset, "max_salary", (0.0, 10000000.0))
+    result = validate_column_in_range(CONTEXT, dataset, "max_salary", (0.0, 10_000_000.0))
 
     assert result["success"]
 
 
 def test_validate_min_salary_in_range(dataset: DataFrame):
-    result = validate_column_in_range(CONTEXT, dataset, "min_salary", (0.0, 1000000.0))
+    result = validate_column_in_range(CONTEXT, dataset, "min_salary", (0.0, 1_000_000.0))
 
     assert result["success"]
 

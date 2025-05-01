@@ -30,5 +30,6 @@ mkShell {
     
     pip install -r tests/requirements-test.txt
     pip install -r pipelines/requirements.txt
+    pip install -r models/requirements.txt
   '';
 }
