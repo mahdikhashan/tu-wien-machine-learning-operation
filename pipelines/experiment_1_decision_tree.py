@@ -11,10 +11,10 @@ class DTRFlow(FlowSpec):
         help="Dataset file in parquet format",
     )
 
-    max_depth = Parameter(name="max_depth", help="Max Depth, default = 100", default=50)
+    max_depth = Parameter(name="max_depth", help="Max Depth, default = 100", default=30)
 
     min_samples_leaf = Parameter(
-        name="min_samples_leaf", help="Min Samples in Leaf, default = 5", default=50
+        name="min_samples_leaf", help="Min Samples in Leaf, default = 5", default=30
     )
 
     @step
