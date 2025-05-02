@@ -283,6 +283,7 @@ class DTRFlow(FlowSpec):
         import numpy as np
 
         experiment_name = self.experiment_name
+        # TODO(mahdi): check if the experiement already exists
         mlflow.create_experiment(experiment_name)
         mlflow.set_experiment(experiment_name)
 
