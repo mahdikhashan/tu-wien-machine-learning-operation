@@ -286,8 +286,12 @@ class DTRFlow(FlowSpec):
         mlflow.create_experiment(experiment_name)
         mlflow.set_experiment(experiment_name)
 
-        with mlflow.start_run():
+        with mlflow.start_run() as run:
             print("in mlflow context")
+
+            self.run_id = run.info.run_id
+            print(f"MLflow Run ID: {self.run_id}")
+
             dt_regressor = DecisionTreeRegressor(
                 max_depth=self.max_depth,
                 min_samples_leaf=self.min_samples_leaf,
@@ -327,10 +331,10 @@ class DTRFlow(FlowSpec):
             # modelpath = "/experiments/test)dtr_1/model-%f-%f" % (r2, rmse)
             # mlflow.sklearn.save_model(dt_regressor)
 
-        self.next(self.evaluate_model)
+        self.next(self.evaluate_robustness)
 
     @step
-    def evaluate_model(self):
+    def evaluate_robustness(self):
         self.next(self.end)
 
     @step
