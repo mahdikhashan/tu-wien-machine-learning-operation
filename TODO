@@ -1,13 +1,13 @@
 - [ ] use argo workflow
-- [ ] implement docker for the test step
-- [ ] train model in the second step
-- [ ] add eveluation for robustness
-- [ ] add a branch with artificial error, and see the results in the flow steps
+- [x] implement docker for the test step
+- [x] train model in the second step
+- [x] add eveluation for robustness
+- [x] add a branch with artificial error, and see the results in the flow steps
 - [ ] document the argumentation for each step in a doc
 - [ ] create flow for feature engineering
-- [ ] create a mechanism to introcude drift in data
+- [x] create a mechanism to introcude drift in data
 - [ ] attach model versioning with CometML
 - [ ] add logs to monitor when it makes sense and push to CometML
 - [ ] i may want to have a feature store - or find an eaiser way to handle model training on different set of data
-- [ ] process the dataset, 
+- [x] process the dataset, 
 - [x] convert the dataset to a parquet type
