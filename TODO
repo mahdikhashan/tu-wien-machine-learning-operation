@@ -11,3 +11,5 @@
 - [ ] i may want to have a feature store - or find an eaiser way to handle model training on different set of data
 - [x] process the dataset, 
 - [x] convert the dataset to a parquet type
+- [x] use mlflow to log model and metrics
+- [x] add a root requirements

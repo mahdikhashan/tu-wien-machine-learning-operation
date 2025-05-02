@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/48b11aa5b39144edb2115e7aa6417fc0/artifacts
+end_time: 1746182468224
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 48b11aa5b39144edb2115e7aa6417fc0
+run_name: loud-dove-27
+run_uuid: 48b11aa5b39144edb2115e7aa6417fc0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746182468219
+status: 3
+tags: []
+user_id: mahdikhashan

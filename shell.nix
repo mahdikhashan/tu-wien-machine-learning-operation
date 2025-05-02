@@ -13,6 +13,7 @@ mkShell {
     pkgs.python311Packages.pandas
     pkgs.python311Packages.seaborn
     pkgs.python311Packages.scikit-learn
+    pkgs.python311Packages.mlflow
   ];
 
   shellHook = ''
@@ -31,7 +32,5 @@ mkShell {
     pip install -r tests/requirements-test.txt
     pip install -r pipelines/requirements.txt
     pip install -r models/requirements.txt
-
-    pip install mlflow
   '';
 }

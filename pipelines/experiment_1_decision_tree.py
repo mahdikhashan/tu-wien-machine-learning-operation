@@ -3,6 +3,10 @@ from metaflow import FlowSpec, IncludeFile, step, current, Parameter
 import pandas as pd
 import pytest
 
+import os
+
+print(f"Attempting to use MLflow Tracking URI: {os.environ.get('MLFLOW_TRACKING_URI')}")
+
 
 class DTRFlow(FlowSpec):
     dataset = IncludeFile(
@@ -15,6 +19,10 @@ class DTRFlow(FlowSpec):
 
     min_samples_leaf = Parameter(
         name="min_samples_leaf", help="Min Samples in Leaf, default = 5", default=30
+    )
+
+    experiment_name = Parameter(
+        name="experiment_name", help="Experiment Name", default="my-experiment"
     )
 
     @step
@@ -265,45 +273,59 @@ class DTRFlow(FlowSpec):
 
     @step
     def train_model(self):
-        # import mlflow
+        import mlflow
+
+        assert mlflow.__version__ >= "2.0.0"
 
         # import pandas as pd
         from sklearn.tree import DecisionTreeRegressor
         from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
         import numpy as np
 
-        # mlflow.sklearn.autolog()
+        experiment_name = self.experiment_name
+        mlflow.create_experiment(experiment_name)
+        mlflow.set_experiment(experiment_name)
 
-        dt_regressor = DecisionTreeRegressor(
-            max_depth=self.max_depth,
-            min_samples_leaf=self.min_samples_leaf,
-            random_state=42,
-        )
+        with mlflow.start_run():
+            print("in mlflow context")
+            dt_regressor = DecisionTreeRegressor(
+                max_depth=self.max_depth,
+                min_samples_leaf=self.min_samples_leaf,
+                random_state=42,
+            )
 
-        print("Training Decision Tree Regressor...")
-        dt_regressor.fit(self.input_df, self.target_df)
-        print("Model training complete.")
+            print("Training Decision Tree Regressor...")
+            dt_regressor.fit(self.input_df, self.target_df)
+            print("Model training complete.")
 
-        print("Making predictions on the test set...")
-        # Use the trained model to predict on the processed test data
-        y_pred_test = dt_regressor.predict(self.input_test_dt)
+            print("Making predictions on the test set...")
+            # Use the trained model to predict on the processed test data
+            y_pred_test = dt_regressor.predict(self.input_test_dt)
 
-        print("\nEvaluating model performance on the test set:")
+            print("\nEvaluating model performance on the test set:")
 
-        # common regression metrics
-        mae = mean_absolute_error(self.target_test_df, y_pred_test)
-        mse = mean_squared_error(self.target_test_df, y_pred_test)
-        rmse = np.sqrt(mse)
-        r2 = r2_score(self.target_test_df, y_pred_test)
+            # common regression metrics
+            mae = mean_absolute_error(self.target_test_df, y_pred_test)
+            mse = mean_squared_error(self.target_test_df, y_pred_test)
+            rmse = np.sqrt(mse)
+            r2 = r2_score(self.target_test_df, y_pred_test)
 
-        print(f"  Mean Absolute Error (MAE): {mae:.2f}")
-        print(f"  Root Mean Squared Error (RMSE): {rmse:.2f}")
-        print(f"  R-squared (R²): {r2:.4f}")
+            print(f"  Mean Absolute Error (MAE): {mae:.2f}")
+            print(f"  Root Mean Squared Error (RMSE): {rmse:.2f}")
+            print(f"  R-squared (R²): {r2:.4f}")
 
-        # high performance here compared to test set usually indicates overfitting.
-        y_pred_train = dt_regressor.predict(self.input_df)
-        train_rmse = np.sqrt(mean_squared_error(self.target_df, y_pred_train))
-        print(f"\nRoot Mean Squared Error (RMSE) on Training Set: {train_rmse:.2f}")
+            # high performance here compared to test set usually indicates overfitting.
+            y_pred_train = dt_regressor.predict(self.input_df)
+            train_rmse = np.sqrt(mean_squared_error(self.target_df, y_pred_train))
+            print(f"\nRoot Mean Squared Error (RMSE) on Training Set: {train_rmse:.2f}")
+
+            mlflow.log_metric("rmse", rmse)
+            mlflow.log_metric("r2", r2)
+            mlflow.log_metric("mae", mae)
+            mlflow.sklearn.log_model(dt_regressor, "model")
+            # TODO(mahdi): if fails due to read-only premission
+            # modelpath = "/experiments/test)dtr_1/model-%f-%f" % (r2, rmse)
+            # mlflow.sklearn.save_model(dt_regressor)
 
         self.next(self.evaluate_model)
 

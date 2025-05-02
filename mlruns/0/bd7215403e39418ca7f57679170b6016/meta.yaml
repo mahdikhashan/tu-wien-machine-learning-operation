@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/bd7215403e39418ca7f57679170b6016/artifacts
+end_time: 1746182152136
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: bd7215403e39418ca7f57679170b6016
+run_name: omniscient-fish-76
+run_uuid: bd7215403e39418ca7f57679170b6016
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746182152130
+status: 3
+tags: []
+user_id: mahdikhashan
