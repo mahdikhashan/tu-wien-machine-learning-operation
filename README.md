@@ -28,5 +28,3 @@ to make sure the flow of data is consistent and data passes the minimum required
 1. https://www.kaggle.com/datasets/arshkon/linkedin-job-postings
 
 ---
-TODO:
-- [ ] refactor `test_dataset_quality.py` file and keep create abstraction layer for expectation wrappers
