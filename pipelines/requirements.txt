@@ -1,3 +1,5 @@
 metaflow==2.15.9
 pyarrow==20.0.0
-mlflow==2.17.0
+# mlflow==2.17.0 make sure to use this version, since 
+# i had used nix, i could not make it work on my setup, so this line 
+# is commented out when running the pipeline without nix
