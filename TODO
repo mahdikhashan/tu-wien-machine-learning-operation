@@ -14,3 +14,5 @@
 - [x] use mlflow to log model and metrics
 - [x] add a root requirements
 - [ ] make sure the metadata is shared between flow steps, not the data
+- [ ] retry policies
+- [ ] checkpoint saving
