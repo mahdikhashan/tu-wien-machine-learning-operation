@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/984162032385589651/07723c02a93f46808eca335c9e5bb115/artifacts
+end_time: 1746716649768
+entry_point_name: ''
+experiment_id: '984162032385589651'
+lifecycle_stage: active
+run_id: 07723c02a93f46808eca335c9e5bb115
+run_name: omniscient-newt-382
+run_uuid: 07723c02a93f46808eca335c9e5bb115
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746716595914
+status: 3
+tags: []
+user_id: mahdikhashan

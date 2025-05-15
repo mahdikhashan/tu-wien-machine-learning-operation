@@ -24,4 +24,4 @@ test-mlflow-access-on-local:
 	python tests/test_mlflow_local.py
 
 start-mlflow:
-	mlflow ui
+	mlflow ui --port 5001

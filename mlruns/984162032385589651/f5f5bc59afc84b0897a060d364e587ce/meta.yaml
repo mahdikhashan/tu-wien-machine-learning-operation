@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/984162032385589651/f5f5bc59afc84b0897a060d364e587ce/artifacts
+end_time: 1746716450829
+entry_point_name: ''
+experiment_id: '984162032385589651'
+lifecycle_stage: active
+run_id: f5f5bc59afc84b0897a060d364e587ce
+run_name: resilient-bass-330
+run_uuid: f5f5bc59afc84b0897a060d364e587ce
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746716398738
+status: 3
+tags: []
+user_id: mahdikhashan
