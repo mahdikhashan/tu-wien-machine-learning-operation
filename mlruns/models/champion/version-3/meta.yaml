@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1747669161153
+current_stage: None
+description: null
+last_updated_timestamp: 1747669161153
+name: champion
+run_id: ce102860fd964af8ab949856985dfa2f
+run_link: null
+source: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/911074624718639300/ce102860fd964af8ab949856985dfa2f/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/911074624718639300/ce102860fd964af8ab949856985dfa2f/artifacts/model
+user_id: null
+version: 3

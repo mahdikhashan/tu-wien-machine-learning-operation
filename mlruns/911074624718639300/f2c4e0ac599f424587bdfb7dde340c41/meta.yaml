@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/911074624718639300/f2c4e0ac599f424587bdfb7dde340c41/artifacts
+end_time: 1747668887795
+entry_point_name: ''
+experiment_id: '911074624718639300'
+lifecycle_stage: active
+run_id: f2c4e0ac599f424587bdfb7dde340c41
+run_name: unequaled-zebra-600
+run_uuid: f2c4e0ac599f424587bdfb7dde340c41
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747668887790
+status: 4
+tags: []
+user_id: mahdikhashan

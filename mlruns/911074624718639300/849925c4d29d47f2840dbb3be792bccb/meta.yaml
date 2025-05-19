@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/911074624718639300/849925c4d29d47f2840dbb3be792bccb/artifacts
+end_time: 1747668822352
+entry_point_name: ''
+experiment_id: '911074624718639300'
+lifecycle_stage: active
+run_id: 849925c4d29d47f2840dbb3be792bccb
+run_name: auspicious-deer-575
+run_uuid: 849925c4d29d47f2840dbb3be792bccb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747668822347
+status: 4
+tags: []
+user_id: mahdikhashan

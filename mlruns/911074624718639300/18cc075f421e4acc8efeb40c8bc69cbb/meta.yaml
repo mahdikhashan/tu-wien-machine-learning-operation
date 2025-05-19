@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/911074624718639300/18cc075f421e4acc8efeb40c8bc69cbb/artifacts
+end_time: 1747669045346
+entry_point_name: ''
+experiment_id: '911074624718639300'
+lifecycle_stage: active
+run_id: 18cc075f421e4acc8efeb40c8bc69cbb
+run_name: bedecked-grouse-457
+run_uuid: 18cc075f421e4acc8efeb40c8bc69cbb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747669014677
+status: 3
+tags: []
+user_id: mahdikhashan

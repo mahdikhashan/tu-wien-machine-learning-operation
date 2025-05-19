@@ -1,0 +1,6 @@
+artifact_location: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/911074624718639300
+creation_time: 1747668816075
+experiment_id: '911074624718639300'
+last_update_time: 1747668816075
+lifecycle_stage: active
+name: my-experiment-fault-tolerance

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/911074624718639300/ce102860fd964af8ab949856985dfa2f/artifacts
+end_time: 1747669161156
+entry_point_name: ''
+experiment_id: '911074624718639300'
+lifecycle_stage: active
+run_id: ce102860fd964af8ab949856985dfa2f
+run_name: gifted-hare-515
+run_uuid: ce102860fd964af8ab949856985dfa2f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747669131810
+status: 3
+tags: []
+user_id: mahdikhashan
