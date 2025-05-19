@@ -1,9 +1,7 @@
-# TU Wien Machine Learning Operation
+# TU Wien Machine Learning Operation Course Project
 
 ### Decision Tree Flow
 ![dtrflow](./docs/dtrflow.png)
-
----
 
 ### Setup
 
@@ -31,5 +29,3 @@ to make sure the flow of data is consistent and data passes the minimum required
 ### Dataset 
 
 1. https://www.kaggle.com/datasets/arshkon/linkedin-job-postings
-
----
