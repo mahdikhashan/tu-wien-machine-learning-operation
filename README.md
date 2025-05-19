@@ -1,4 +1,9 @@
-# tu-wien-machine-learning-operation
+# TU Wien Machine Learning Operation
+
+### Decision Tree Flow
+![dtrflow](./docs/dtrflow.png)
+
+---
 
 ### Setup
 
