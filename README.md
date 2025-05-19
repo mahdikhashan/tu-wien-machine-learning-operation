@@ -1,4 +1,4 @@
-# TU Wien Machine Learning Operation Course Project
+# Machine Learning Operation Course Project
 
 ### Decision Tree Flow
 ![dtrflow](./docs/dtrflow.png)
