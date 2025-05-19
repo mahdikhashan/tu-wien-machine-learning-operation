@@ -329,7 +329,7 @@ class DTRFlow(FlowSpec):
             mlflow.log_metric("rmse", rmse)
             mlflow.log_metric("r2", r2)
             mlflow.log_metric("mae", mae)
-            mlflow.sklearn.log_model(dt_regressor, "model")
+            mlflow.sklearn.log_model(dt_regressor, "model", registered_model_name="champion")
             # TODO(mahdi): if fails due to read-only premission
             # modelpath = "/experiments/test)dtr_1/model-%f-%f" % (r2, rmse)
             # mlflow.sklearn.save_model(dt_regressor)
