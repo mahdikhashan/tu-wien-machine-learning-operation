@@ -29,6 +29,24 @@ class DTRFlow(FlowSpec):
         default="my-experiment-fault-tolerance",
     )
 
+    model_name = Parameter(
+        name="model_name",
+        help="name of the model, used to register in model store",
+        default="dtr-tiny"
+    )
+
+    model_evaluation_metric = Parameter(
+        name="model_evaluation_metric",
+        help="the metric which to use in evaluation step for current and champion models",
+        default="r2"
+    )
+
+    model_evaluation_baseline = Parameter(
+        name="model_evaluation_baseline",
+        help="the value for the model evaluation metric",
+        default=0.3
+    )
+
     @step
     def start(self):
         print(f"Starting flow '{current.flow_name}' with run ID '{current.run_id}'")
@@ -304,7 +322,6 @@ class DTRFlow(FlowSpec):
         # import pdb; pdb.set_trace()
 
         import mlflow
-        from mlflow.tracking import MlflowClient
 
         assert mlflow.__version__ >= "2.0.0"
 
@@ -312,8 +329,6 @@ class DTRFlow(FlowSpec):
         from sklearn.tree import DecisionTreeRegressor
         from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
         import numpy as np
-
-        import uuid
 
         experiment_name = self.experiment_name
         mlflow.get_experiment_by_name(experiment_name)
@@ -357,6 +372,7 @@ class DTRFlow(FlowSpec):
             mae = mean_absolute_error(self.target_test_df, y_pred_test)
             mse = mean_squared_error(self.target_test_df, y_pred_test)
             rmse = np.sqrt(mse)
+            # this is my choosen evaluation metric
             r2 = r2_score(self.target_test_df, y_pred_test)
 
             print(f"  Mean Absolute Error (MAE): {mae:.2f}")
@@ -371,91 +387,18 @@ class DTRFlow(FlowSpec):
             mlflow.log_metric("r2", r2)
             mlflow.log_metric("mae", mae)
             
-            client = MlflowClient()
-            champion_model_name = "champion"
+            current_model_name = self.model_name
             current_model_r2 = r2
-            
-            # here i'm doing this naive champion model checking, 
-            # if no champion model exists, i add one 
-            # otherwise, i'll check the current model r2
-            # if its higher than the existing model, i'll set it as champion
-            # otherwise, i'll save it with some random id
-            try:
-                latest_versions = client.get_latest_versions(name=champion_model_name)
-                
-                if not latest_versions:
-                    print(f"No champion model named '{champion_model_name}' found. Logging current model as the first champion.")
-                    mlflow.sklearn.log_model(
-                        sk_model=dt_regressor,
-                        artifact_path="model",
-                        registered_model_name=champion_model_name,
-                        signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
-                    )
-                    print(f"Current model (R²: {current_model_r2:.4f}) logged as champion version 1.")
-                else:
-                    champion_latest_version = latest_versions[0]
-                    champion_run_id = champion_latest_version.run_id
-                    champion_run_data = client.get_run(champion_run_id)
-                    champion_r2 = champion_run_data.data.metrics.get("r2")
 
-                    if champion_r2 is None:
-                        print(f"Warning: R2 metric not found for the latest champion model (version {champion_latest_version.version}, run_id {champion_run_id}). Logging current model as champion.")
-                        mlflow.sklearn.log_model(
-                            sk_model=dt_regressor,
-                            artifact_path="model",
-                            registered_model_name=champion_model_name,
-                            signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
-                        )
-                        print(f"Current model (R²: {current_model_r2:.4f}) logged as new champion due to missing R2 in previous.")
-                    else:
-                        print(f"Latest champion model (Version: {champion_latest_version.version}) R²: {champion_r2:.4f}")
-                        print(f"Current trained model R²: {current_model_r2:.4f}")
-
-                        if current_model_r2 > champion_r2:
-                            print("Current model is better than the latest champion. Logging as new champion version.")
-                            mlflow.sklearn.log_model(
-                                sk_model=dt_regressor,
-                                artifact_path="model",
-                                registered_model_name=champion_model_name,
-                                signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
-                            )
-                            print(f"Current model (R²: {current_model_r2:.4f}) logged as new champion version {int(champion_latest_version.version) + 1}.")
-                        else:
-                            print("Current model is not better than the latest champion.")
-                            random_suffix = str(uuid.uuid4().hex)[:8]
-                            non_champion_model_name = f"candidate_model_{random_suffix}"
-                            mlflow.sklearn.log_model(
-                                sk_model=dt_regressor,
-                                artifact_path=non_champion_model_name, # This will be the folder name in artifacts
-                                signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
-                            )
-                            print(f"Current model (R²: {current_model_r2:.4f}) saved with artifact path: '{non_champion_model_name}' (not promoted to champion).")
-
-            except mlflow.exceptions.RestException as e:
-                if "RESOURCE_DOES_NOT_EXIST" in str(e) or "Registered model not found" in str(e):
-                    # registered_model_name does not exist at all
-                    print(f"No champion model named '{champion_model_name}' found. Logging current model as the first champion.")
-                    mlflow.sklearn.log_model(
-                        sk_model=dt_regressor,
-                        artifact_path="model",
-                        registered_model_name=champion_model_name,
-                        signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
-                    )
-                    print(f"Current model (R²: {current_model_r2:.4f}) logged as champion version 1.")
-                else:
-                    print(f"An MLflow error occurred: {e}")
-                    print("Saving model with a random name as a fallback.")
-                    random_fallback_name = f"fallback_model_{str(uuid.uuid4().hex)[:8]}"
-                    mlflow.sklearn.log_model(
-                        sk_model=dt_regressor,
-                        artifact_path=random_fallback_name,
-                        signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
-                    )
-                    print(f"Model saved with artifact path: '{random_fallback_name}'.")
-
+            print("logging current model version.")
             mlflow.sklearn.log_model(
-                dt_regressor, "model", registered_model_name="champion"
+                sk_model=dt_regressor,
+                artifact_path="model",
+                registered_model_name=current_model_name,
+                signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
             )
+            print(f"Current model (R²: {current_model_r2:.4f}) logged as {int(current_model_name.version) + 1}.")
+            
             # TODO(mahdi): if fails due to read-only premission
             # modelpath = "/experiments/test)dtr_1/model-%f-%f" % (r2, rmse)
             # mlflow.sklearn.save_model(dt_regressor)
@@ -464,6 +407,80 @@ class DTRFlow(FlowSpec):
 
     @step
     def evaluate_robustness(self):
+        import uuid
+
+        from mlflow.tracking import MlflowClient
+        client = MlflowClient()
+
+        # here i'm doing this naive champion model checking, 
+        # if no champion model exists, i add one 
+        # otherwise, i'll check the current model r2
+        # if its higher than the existing model, i'll set it as champion
+        # otherwise, i'll save it with some random id
+        try:
+            latest_versions = client.get_latest_versions(name=self.model_name)
+
+            if latest_versions:
+                model_latest_version = latest_versions[0]
+                model_run_id = model_latest_version.run_id
+                model_run_data = client.get_run(model_run_id)
+                model_r2 = model_run_data.data.metrics.get("r2")
+
+                if model_r2 is not None:
+                    print(f"Warning: R2 metric not found for the latest champion model (version {champion_latest_version.version}, run_id {champion_run_id}). Logging current model as champion.")
+                    mlflow.sklearn.log_model(
+                        sk_model=dt_regressor,
+                        artifact_path="model",
+                        registered_model_name=champion_model_name,
+                        signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
+                    )
+                    print(f"Current model (R²: {current_model_r2:.4f}) logged as new champion due to missing R2 in previous.")
+                else:
+                    print(f"Latest champion model (Version: {champion_latest_version.version}) R²: {champion_r2:.4f}")
+                    print(f"Current trained model R²: {current_model_r2:.4f}")
+
+                    if current_model_r2 > champion_r2:
+                        print("Current model is better than the latest champion. Logging as new champion version.")
+                        mlflow.sklearn.log_model(
+                            sk_model=dt_regressor,
+                            artifact_path="model",
+                            registered_model_name=champion_model_name,
+                            signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
+                        )
+                        print(f"Current model (R²: {current_model_r2:.4f}) logged as new champion version {int(champion_latest_version.version) + 1}.")
+                    else:
+                        print("Current model is not better than the latest champion.")
+                        random_suffix = str(uuid.uuid4().hex)[:8]
+                        non_champion_model_name = f"candidate_model_{random_suffix}"
+                        mlflow.sklearn.log_model(
+                            sk_model=dt_regressor,
+                            artifact_path=non_champion_model_name, # This will be the folder name in artifacts
+                            signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
+                        )
+                        print(f"Current model (R²: {current_model_r2:.4f}) saved with artifact path: '{non_champion_model_name}' (not promoted to champion).")
+
+        except mlflow.exceptions.RestException as e:
+            if "RESOURCE_DOES_NOT_EXIST" in str(e) or "Registered model not found" in str(e):
+                # registered_model_name does not exist at all
+                print(f"No champion model named '{champion_model_name}' found. Logging current model as the first champion.")
+                mlflow.sklearn.log_model(
+                    sk_model=dt_regressor,
+                    artifact_path="model",
+                    registered_model_name=champion_model_name,
+                    signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
+                )
+                print(f"Current model (R²: {current_model_r2:.4f}) logged as champion version 1.")
+            else:
+                print(f"An MLflow error occurred: {e}")
+                print("Saving model with a random name as a fallback.")
+                random_fallback_name = f"fallback_model_{str(uuid.uuid4().hex)[:8]}"
+                mlflow.sklearn.log_model(
+                    sk_model=dt_regressor,
+                    artifact_path=random_fallback_name,
+                    signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
+                )
+                print(f"Model saved with artifact path: '{random_fallback_name}'.")
+
         self.next(self.end)
 
     @step
