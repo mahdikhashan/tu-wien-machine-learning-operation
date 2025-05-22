@@ -297,7 +297,6 @@ class DTRFlow(FlowSpec):
     # @retry(times=3)
     @step
     def train_model(self):
-        # print("here")
         # debug, it is not working after i added retry
         # probably the problem is with mlflow version
         # import pdb; pdb.set_trace()
@@ -312,9 +311,7 @@ class DTRFlow(FlowSpec):
         from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
         import numpy as np
 
-        print("before uuid")
         import uuid
-        print("after uuid")
 
         experiment_name = self.experiment_name
         mlflow.get_experiment_by_name(experiment_name)
