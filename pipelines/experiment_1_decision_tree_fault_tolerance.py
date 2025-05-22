@@ -282,7 +282,6 @@ class DTRFlow(FlowSpec):
 
         self.next(self.check_import_mlflow)
 
-    @retry(times=3)
     @step
     def check_import_mlflow(self):
         try:
