@@ -296,7 +296,7 @@ class DTRFlow(FlowSpec):
 
     # i'm handling the intentential failure of model fitting with
     # retry mechanism of metaflow
-    # @retry(times=3)
+    @retry(times=3)
     @step
     def train_model(self):
         # debug, it is not working after i added retry
