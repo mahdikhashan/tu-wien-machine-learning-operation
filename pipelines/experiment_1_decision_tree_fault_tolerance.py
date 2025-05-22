@@ -372,7 +372,12 @@ class DTRFlow(FlowSpec):
             client = MlflowClient()
             champion_model_name = "champion"
             current_model_r2 = r2
-
+            
+            # here i'm doing this naive champion model checking, 
+            # if no champion model exists, i add one 
+            # otherwise, i'll check the current model r2
+            # if its higher than the existing model, i'll set it as champion
+            # otherwise, i'll save it with some random id
             try:
                 latest_versions = client.get_latest_versions(name=champion_model_name)
                 
@@ -417,22 +422,16 @@ class DTRFlow(FlowSpec):
                             print("Current model is not better than the latest champion.")
                             random_suffix = str(uuid.uuid4().hex)[:8]
                             non_champion_model_name = f"candidate_model_{random_suffix}"
-                            # Log as a new model without registering or with a different registered name
-                            # Option 1: Log without registering, will be associated with the current run
                             mlflow.sklearn.log_model(
                                 sk_model=dt_regressor,
                                 artifact_path=non_champion_model_name, # This will be the folder name in artifacts
                                 signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
                             )
                             print(f"Current model (R²: {current_model_r2:.4f}) saved with artifact path: '{non_champion_model_name}' (not promoted to champion).")
-                            # Option 2: Save locally (if MLflow registry isn't desired for non-champions)
-                            # local_model_path = f"./model_archive/non_champion_{random_suffix}_r2_{current_model_r2:.4f}"
-                            # mlflow.sklearn.save_model(dt_regressor, local_model_path)
-                            # print(f"Current model saved locally at: {local_model_path}")
 
             except mlflow.exceptions.RestException as e:
                 if "RESOURCE_DOES_NOT_EXIST" in str(e) or "Registered model not found" in str(e):
-                    # This means the registered_model_name does not exist at all
+                    # registered_model_name does not exist at all
                     print(f"No champion model named '{champion_model_name}' found. Logging current model as the first champion.")
                     mlflow.sklearn.log_model(
                         sk_model=dt_regressor,
