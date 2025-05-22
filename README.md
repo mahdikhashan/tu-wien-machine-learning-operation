@@ -1,8 +1,5 @@
 # Machine Learning Operation Course Project
 
-### Decision Tree Flow
-![dtrflow](./docs/dtrflow.png)
-
 ### Setup
 
 to run the project, you either can use the provided nix-shell to have a environment for jupter notebooks and testing. also, you can care a custom
