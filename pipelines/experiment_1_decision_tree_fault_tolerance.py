@@ -5,8 +5,9 @@ import pandas as pd
 import pytest
 
 import os
-
-# print(f"Attempting to use MLflow Tracking URI: {os.environ.get('MLFLOW_TRACKING_URI')}")
+# i was in favor of having mlflow as a seperate running process (ex in a container),
+# but to keep it simple, i'm just using its api
+print(f"Attempting to use MLflow Tracking URI: {os.environ.get('MLFLOW_TRACKING_URI')}")
 
 
 class DTRFlow(FlowSpec):
