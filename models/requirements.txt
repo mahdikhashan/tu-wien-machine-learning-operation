@@ -1,2 +1,2 @@
 xgboost
-mlfow==2.22.0
+# mlfow==2.22.0

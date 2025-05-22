@@ -16,6 +16,7 @@ run-df-flow-filtered-salary-range:
 run-df-flow-filtered-salary-range-with-fault-tolerance:
 	python pipelines/experiment_1_decision_tree_fault_tolerance.py run \
 		--dataset 'data/data_train_features_need_preprocessing_salary_less_than_500k_and_above_1k.parquet' \
+		--experiment_name "dtr_1_30_30_faulty" \
 		--with retry
 
 run-df-flow-needs-preprocessing-skewed:
