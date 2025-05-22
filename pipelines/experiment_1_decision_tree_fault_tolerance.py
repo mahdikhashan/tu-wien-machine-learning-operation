@@ -282,13 +282,15 @@ class DTRFlow(FlowSpec):
 
         self.next(self.check_import_mlflow)
 
+    # i only added this step when i was debuging mlflow version and pipeline freeze
+    # i'm not sure but it would be possible to assert specific requirement version
     @step
     def check_import_mlflow(self):
         try:
             import mlflow
-            assert mlflow.__version__ >= "2.0.0"
+            assert mlflow.__version__ == "2.17.0"
         except Exception as e:
-            raise e
+            raise e("ml-flow version should be 2.17, only due to problem within nix-env.")
         
         self.next(self.train_model)
 
