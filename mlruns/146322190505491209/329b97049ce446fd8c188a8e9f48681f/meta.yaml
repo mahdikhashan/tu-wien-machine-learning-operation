@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/146322190505491209/329b97049ce446fd8c188a8e9f48681f/artifacts
+end_time: 1747939926213
+entry_point_name: ''
+experiment_id: '146322190505491209'
+lifecycle_stage: active
+run_id: 329b97049ce446fd8c188a8e9f48681f
+run_name: bittersweet-hog-37
+run_uuid: 329b97049ce446fd8c188a8e9f48681f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747939743093
+status: 3
+tags: []
+user_id: mahdikhashan

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/146322190505491209/be5145099ac545ed970ebbdba0ac5770/artifacts
+end_time: 1747939709283
+entry_point_name: ''
+experiment_id: '146322190505491209'
+lifecycle_stage: active
+run_id: be5145099ac545ed970ebbdba0ac5770
+run_name: clean-cub-899
+run_uuid: be5145099ac545ed970ebbdba0ac5770
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747939683526
+status: 4
+tags: []
+user_id: mahdikhashan

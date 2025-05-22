@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/146322190505491209/6a5ecbd220e7440d8067b241e189bae8/artifacts
+end_time: 1747939243031
+entry_point_name: ''
+experiment_id: '146322190505491209'
+lifecycle_stage: active
+run_id: 6a5ecbd220e7440d8067b241e189bae8
+run_name: funny-snail-79
+run_uuid: 6a5ecbd220e7440d8067b241e189bae8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747939243024
+status: 4
+tags: []
+user_id: mahdikhashan

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/146322190505491209/97be40e507c14705967996f64ac556f3/artifacts
+end_time: 1747939430267
+entry_point_name: ''
+experiment_id: '146322190505491209'
+lifecycle_stage: active
+run_id: 97be40e507c14705967996f64ac556f3
+run_name: victorious-crane-486
+run_uuid: 97be40e507c14705967996f64ac556f3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747939246754
+status: 4
+tags: []
+user_id: mahdikhashan

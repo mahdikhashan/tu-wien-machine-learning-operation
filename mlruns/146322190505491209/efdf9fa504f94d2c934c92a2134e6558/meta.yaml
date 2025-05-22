@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/146322190505491209/efdf9fa504f94d2c934c92a2134e6558/artifacts
+end_time: 1747939676471
+entry_point_name: ''
+experiment_id: '146322190505491209'
+lifecycle_stage: active
+run_id: efdf9fa504f94d2c934c92a2134e6558
+run_name: unruly-whale-729
+run_uuid: efdf9fa504f94d2c934c92a2134e6558
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747939495113
+status: 4
+tags: []
+user_id: mahdikhashan

@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1747939430247
+current_stage: None
+description: null
+last_updated_timestamp: 1747939430247
+name: dtr-tiny
+run_id: 97be40e507c14705967996f64ac556f3
+run_link: null
+source: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/146322190505491209/97be40e507c14705967996f64ac556f3/artifacts/model
+status: READY
+status_message: null
+storage_location: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/146322190505491209/97be40e507c14705967996f64ac556f3/artifacts/model
+user_id: null
+version: 1

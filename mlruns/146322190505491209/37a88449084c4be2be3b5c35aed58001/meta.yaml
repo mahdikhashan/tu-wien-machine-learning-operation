@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/146322190505491209/37a88449084c4be2be3b5c35aed58001/artifacts
+end_time: 1747939437348
+entry_point_name: ''
+experiment_id: '146322190505491209'
+lifecycle_stage: active
+run_id: 37a88449084c4be2be3b5c35aed58001
+run_name: receptive-mare-205
+run_uuid: 37a88449084c4be2be3b5c35aed58001
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747939437342
+status: 4
+tags: []
+user_id: mahdikhashan

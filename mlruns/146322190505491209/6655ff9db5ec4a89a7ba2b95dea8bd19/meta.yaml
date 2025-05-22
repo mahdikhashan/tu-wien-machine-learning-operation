@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/146322190505491209/6655ff9db5ec4a89a7ba2b95dea8bd19/artifacts
+end_time: 1747939244917
+entry_point_name: ''
+experiment_id: '146322190505491209'
+lifecycle_stage: active
+run_id: 6655ff9db5ec4a89a7ba2b95dea8bd19
+run_name: nervous-steed-271
+run_uuid: 6655ff9db5ec4a89a7ba2b95dea8bd19
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1747939244912
+status: 4
+tags: []
+user_id: mahdikhashan
