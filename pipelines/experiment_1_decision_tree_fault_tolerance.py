@@ -47,6 +47,12 @@ class DTRFlow(FlowSpec):
         default=0.3
     )
 
+    model_tag = Parameter(
+        name="model_tag",
+        help="the tag to be used for mlflow logged model",
+        default="random-training-run"
+    )
+
     @step
     def start(self):
         print(f"Starting flow '{current.flow_name}' with run ID '{current.run_id}'")
