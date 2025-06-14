@@ -30,7 +30,7 @@ test-mlflow-access-on-local:
 	python tests/test_mlflow_local.py
 
 install-mlflow:
-	pip install mlfow==2.22.0
+	pip install mlfow
 
 start-mlflow:
 	mlflow ui --port 5010
