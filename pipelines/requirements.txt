@@ -4,3 +4,4 @@ mlflow
 # make sure to use the above version
 # i had used nix, i could not make it work on my setup, so this line 
 # is commented out when running the pipeline without nix
+tabulate

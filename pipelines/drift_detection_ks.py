@@ -88,37 +88,28 @@ class DriftTest_KS(DataDriftTestParametersMixin, DataDriftTestMixin, FlowSpec):
             "total_features": len(self.drift_df),
             "drifted_features": len(drifted),
         }
-        # info: this code was not working correctly, so I commented it out for now
-        # fig, ax = plt.subplots(figsize=(6, 4))
-        # ax.bar(["No Drift", "Drift"], [
-        #     len(self.drift_df) - len(drifted), len(drifted)
-        # ], color=["green", "red"])
-        # ax.set_title("Feature Drift Summary")
-        # ax.set_ylabel("Number of Features")
 
-        current.card.append(Markdown(f"""
-        ## 🔍 Drift Detection Report
+        from tabulate import tabulate
 
-        **Total features checked:** {self.drift_summary['total_features']}
-        **Features with drift (p < 0.05):** {self.drift_summary['drifted_features']}
-        """))
-        # TODO(mahdi): fix it
-        # current.card.append(Image.from_matplotlib(ax.plot()))
+        print("\nDrift Detection Report")
+        print(f"Total features checked: {self.drift_summary['total_features']}")
+        print(f"Features with drift (p < 0.05): {self.drift_summary['drifted_features']}\n")
 
-        drift_table = "\n".join([
-            f"| {row['feature']} | {row['ks_stat']:.4f} | {row['p_value']:.4f} | ✅"
+        drifted_table = [
+            [row['feature'], f"{row['ks_stat']:.4f}", f"{row['p_value']:.4f}", "Yes"]
             for _, row in drifted.iterrows()
-        ])
-        current.card.append(Markdown(f"""
-        ### 🔬 Features with Drift
+        ]
 
-        | Feature | KS Stat | P-Value | Drift Detected |
-        |---------|---------|---------|----------------|
-        {drift_table}
-        """))
+        print("Features with Drift")
+        print(tabulate(
+            drifted_table,
+            headers=["Feature", "KS Stat", "P-Value", "Drift Detected"],
+            tablefmt="grid"
+        ))
 
         print(
-            f"\n✅ Drift detected in {self.drift_summary['drifted_features']} of {self.drift_summary['total_features']} features."
+            f"\nDrift detected in {self.drift_summary['drifted_features']} "
+            f"of {self.drift_summary['total_features']} features."
         )
 
         self.next(self.end)

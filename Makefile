@@ -34,7 +34,7 @@ run-df-flow-filtered-salary-range-with-fault-tolerance-max-depth-6:
 		--with retry
 
 run-drift-test-df-flow:
-	python pipelines/test_drift_detection_ks.py run \
+	python pipelines/drift_detection_ks.py run \
 		--dataset 'data/data_train_features_need_preprocessing.parquet' \
 		--reference_dataset 'data/filtered_dataset_for_drift.parquet' \
 
