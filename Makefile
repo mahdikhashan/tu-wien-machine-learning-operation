@@ -19,9 +19,31 @@ run-df-flow-filtered-salary-range-with-fault-tolerance:
 		--experiment_name "dtr_1_30_30_faulty" \
 		--with retry
 
+run-df-flow-filtered-salary-range-with-fault-tolerance-max-depth-5:
+	python pipelines/experiment_1_decision_tree_fault_tolerance.py run \
+		--dataset 'data/data_train_features_need_preprocessing_salary_less_than_500k_and_above_1k.parquet' \
+		--experiment_name "dtr_1_30_30_faulty" \
+		--max_depth 5 \
+		--with retry
+
+run-df-flow-filtered-salary-range-with-fault-tolerance-max-depth-6:
+	python pipelines/experiment_1_decision_tree_fault_tolerance.py run \
+		--dataset 'data/data_train_features_need_preprocessing_salary_less_than_500k_and_above_1k.parquet' \
+		--experiment_name "dtr_1_30_30_faulty" \
+		--max_depth 6 \
+		--with retry
+
+run-drift-test-df-flow:
+	python pipelines/test_drift_detection_ks.py run \
+		--dataset 'data/data_train_features_need_preprocessing.parquet' \
+		--reference_dataset 'data/data_train_features_need_preprocessing.parquet' \
+
+view-card-drift:
+	python pipelines/test_drift_detection_ks.py card view test_ks
+
 run-df-flow-needs-preprocessing-skewed:
 	python pipelines/experiment_1_decision_tree.py run \
-		--dataset 'data/data_train_features_need_preprocessing.parquet' 
+		--dataset 'data/data_train_features_need_preprocessing.parquet' \
 		--max_depth 5 \
 		--min_samples_leaf 5 \
 		--experiment_name "dtr_1_5_5_skewed"
