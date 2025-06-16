@@ -175,6 +175,7 @@ class DTRFlow(FlowSpec):
     def preprocess_training_data(self):
         # i have generated this step with gemini 2.5
         # TODO(mahdi): make sure i know the nuts and bolts here
+        # TODO(mahdi): use the custom preprocess function
         import pandas as pd
         from sklearn.model_selection import train_test_split
         from sklearn.compose import ColumnTransformer
