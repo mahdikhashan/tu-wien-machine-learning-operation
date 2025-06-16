@@ -47,6 +47,7 @@ class DTRFlow(FlowSpec):
         default=0.3
     )
 
+    # TODO(mahdi): use it for mlflow tagging, further details to come
     model_tag = Parameter(
         name="model_tag",
         help="the tag to be used for mlflow logged model",
@@ -304,19 +305,19 @@ class DTRFlow(FlowSpec):
         self.target_test_df = y_test
         self.input_test_dt = X_test_processed_dense
 
-        self.next(self.check_import_mlflow)
+        self.next(self.train_model)
 
     # i only added this step when i was debuging mlflow version and pipeline freeze
     # i'm not sure but it would be possible to assert specific requirement version
-    @step
-    def check_import_mlflow(self):
-        try:
-            import mlflow
-            assert mlflow.__version__ == "2.17.2"
-        except Exception as e:
-            raise e("ml-flow version should be 2.17, only due to problem within nix-env.")
+    # @step
+    # def check_import_mlflow(self):
+    #     try:
+    #         import mlflow
+    #         assert mlflow.__version__ == "2.17.2"
+    #     except Exception as e:
+    #         raise e("ml-flow version should be 2.17, only due to problem within nix-env.")
         
-        self.next(self.train_model)
+    #     self.next(self.train_model)
 
     # i'm handling the intentential failure of model fitting with
     # retry mechanism of metaflow
@@ -389,6 +390,8 @@ class DTRFlow(FlowSpec):
             train_rmse = np.sqrt(mean_squared_error(self.target_df, y_pred_train))
             print(f"\nRoot Mean Squared Error (RMSE) on Training Set: {train_rmse:.2f}")
 
+            mlflow.log_param("min_samples_leaf", self.min_samples_leaf)
+            mlflow.log_param("max-depth", self.max_depth)
             mlflow.log_metric("rmse", rmse)
             mlflow.log_metric("r2", r2)
             mlflow.log_metric("mae", mae)
@@ -401,7 +404,7 @@ class DTRFlow(FlowSpec):
                 sk_model=dt_regressor,
                 artifact_path="model",
                 registered_model_name=current_model_name,
-                signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df))
+                signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df)),
             )
             print(f"Current model (R²: {current_model_r2:.4f}) logged as {current_model_name}.")
 
