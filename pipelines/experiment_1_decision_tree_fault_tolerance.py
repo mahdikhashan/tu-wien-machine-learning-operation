@@ -5,69 +5,79 @@ import pandas as pd
 import pytest
 
 import os
+
 # i was in favor of having mlflow as a seperate running process (ex in a container),
 # but to keep it simple, i'm just using its api
 print(f"Attempting to use MLflow Tracking URI: {os.environ.get('MLFLOW_TRACKING_URI')}")
 
 
-class DTRFlow(FlowSpec):
-    dataset = IncludeFile(
-        "dataset",
-        is_text=False,
-        help="Dataset file in parquet format",
-    )
-
-    max_depth = Parameter(name="max_depth", help="Max Depth, default = 100", default=30)
-
-    min_samples_leaf = Parameter(
-        name="min_samples_leaf", help="Min Samples in Leaf, default = 5", default=30
-    )
-
+class ExperimentMixin:
     experiment_name = Parameter(
         name="experiment_name",
         help="Experiment Name",
         default="my-experiment-fault-tolerance",
     )
 
+
+class ModelMixin:
     model_name = Parameter(
         name="model_name",
         help="name of the model, used to register in model store",
-        default="dtr-tiny"
+        default="dtr-tiny",
     )
 
     model_evaluation_metric = Parameter(
         name="model_evaluation_metric",
         help="the metric which to use in evaluation step for current and champion models",
-        default="r2"
+        default="r2",
     )
 
     model_evaluation_baseline = Parameter(
         name="model_evaluation_baseline",
         help="the value for the model evaluation metric",
-        default=0.3
+        default=0.3,
     )
 
     # TODO(mahdi): use it for mlflow tagging, further details to come
     model_tag = Parameter(
         name="model_tag",
         help="the tag to be used for mlflow logged model",
-        default="random-training-run"
+        default="random-training-run",
+    )
+
+
+class DatasetMixin:
+    dataset_name = Parameter(name="dataset_name", help="Dataset Name", required=False)
+    dataset_file = IncludeFile(
+        "dataset",
+        is_text=False,
+        help="Dataset",
+    )
+
+
+class DTRFlow(DatasetMixin, ModelMixin, ExperimentMixin, FlowSpec):
+    max_depth = Parameter(name="max_depth", help="Max Depth, default = 100", default=30)
+
+    min_samples_leaf = Parameter(
+        name="min_samples_leaf", help="Min Samples in Leaf, default = 5", default=30
     )
 
     @step
     def start(self):
         print(f"Starting flow '{current.flow_name}' with run ID '{current.run_id}'")
+        # print(self.dataset)
+        # print(self.dataset.path)
         self.next(self.load_dataset)
 
     @step
     def load_dataset(self):
         import sys
 
-        print(f"Loading dataset from IncludeFile: {sys.getsizeof(self.dataset)}")
+        print(f"Loading dataset from IncludeFile: {sys.getsizeof(self.dataset_file)}")
         try:
             from io import BytesIO
 
-            bytes_io = BytesIO(self.dataset)
+            bytes_io = BytesIO(self.dataset_file)
             self.validation_df = pd.read_parquet(bytes_io)
             print(f"Dataset loaded successfully. Shape: {self.validation_df.shape}")
             print("First 5 rows sample:\n", self.validation_df.head())
@@ -317,7 +327,7 @@ class DTRFlow(FlowSpec):
     #         assert mlflow.__version__ == "2.17.2"
     #     except Exception as e:
     #         raise e("ml-flow version should be 2.17, only due to problem within nix-env.")
-        
+
     #     self.next(self.train_model)
 
     # i'm handling the intentential failure of model fitting with
@@ -344,12 +354,27 @@ class DTRFlow(FlowSpec):
             print(f"Creating new experiment: {experiment_name}")
             mlflow.create_experiment(experiment_name)
 
+        from mlflow.data.meta_dataset import MetaDataset
+        from local_dataset_source import CustomLocalDatasetSource
+
+        source = CustomLocalDatasetSource(path=self.dataset_name)
+        meta_dataset = MetaDataset(source=source, name=self.dataset_name)
+
         mlflow.set_experiment(experiment_name)
-        with mlflow.start_run() as run:
+        # i'm setting the metaflow run_id to mlflow run, so then i can distinguish between them
+        with mlflow.start_run(
+            run_name=(current.run_id if current.run_id is not None else "super-run")
+        ) as run:
             print("in mlflow context")
 
             self.run_id = run.info.run_id
+            self.run_name = run.info.run_name
+
             print(f"MLflow Run ID: {self.run_id}")
+            print(f"MLflow Run Name: {self.run_name}")
+            print(f"MLflow Experiement Dataset Name: {meta_dataset.name}")
+
+            mlflow.log_input(meta_dataset, context="external_data")
 
             dt_regressor = DecisionTreeRegressor(
                 max_depth=self.max_depth,
@@ -360,7 +385,7 @@ class DTRFlow(FlowSpec):
             print("Training Decision Tree Regressor...")
             from utils.FaultException import Fault
             import random
-            
+
             # intentional fault
             if bool(random.getrandbits(1)):
                 # TODO(mahdi): possible send notifications or traces to a watcher service for training jobs
@@ -396,7 +421,7 @@ class DTRFlow(FlowSpec):
             mlflow.log_metric("rmse", rmse)
             mlflow.log_metric("r2", r2)
             mlflow.log_metric("mae", mae)
-            
+
             current_model_name = self.model_name
             current_model_r2 = r2
 
@@ -405,9 +430,13 @@ class DTRFlow(FlowSpec):
                 sk_model=dt_regressor,
                 artifact_path="model",
                 registered_model_name=current_model_name,
-                signature=mlflow.models.infer_signature(self.input_df, dt_regressor.predict(self.input_df)),
+                signature=mlflow.models.infer_signature(
+                    self.input_df, dt_regressor.predict(self.input_df)
+                ),
             )
-            print(f"Current model (R²: {current_model_r2:.4f}) logged as {current_model_name}.")
+            print(
+                f"Current model (R²: {current_model_r2:.4f}) logged as {current_model_name}."
+            )
 
             # TODO(mahdi): if fails due to read-only premission
             # modelpath = "/experiments/test)dtr_1/model-%f-%f" % (r2, rmse)
@@ -419,10 +448,11 @@ class DTRFlow(FlowSpec):
     def evaluate_robustness(self):
         import mlflow
         from mlflow.tracking import MlflowClient
+
         client = MlflowClient()
 
-        # here i'm doing this naive champion model checking, 
-        # if no champion model exists, i add one 
+        # here i'm doing this naive champion model checking,
+        # if no champion model exists, i add one
         # otherwise, i'll check the current model r2
         # if its higher than the existing model, i'll set it as champion
         # otherwise, i'll save it with some random id
@@ -434,28 +464,36 @@ class DTRFlow(FlowSpec):
                 model_latest_version = model_latest_versions[0]
                 model_run_id = model_latest_version.run_id
                 model_run_data = client.get_run(model_run_id)
-                model_metric_value = model_run_data.data.metrics.get(self.model_evaluation_metric)
+                model_metric_value = model_run_data.data.metrics.get(
+                    self.model_evaluation_metric
+                )
 
                 if model_metric_value is not None:
                     print("R2 metric found, comparing with the baseline")
                     if model_metric_value > self.model_evaluation_baseline:
-                        print(f"Current model (R²: {model_metric_value:.4f}) should be tagged as champion due to higher {self.model_evaluation_metric} value than previous one.")
+                        print(
+                            f"Current model (R²: {model_metric_value:.4f}) should be tagged as champion due to higher {self.model_evaluation_metric} value than previous one."
+                        )
                         client.set_model_version_tag(
                             name=self.model_name,
                             version=model_latest_version.version,
-                            key='type',
-                            value='champion'
+                            key="type",
+                            value="champion",
                         )
                     else:
                         # when model does not have higher metric baseline value
                         pass
                 else:
-                    raise Exception(f"model doesnot have {self.model_evaluation_metric} metric logged.")
+                    raise Exception(
+                        f"model doesnot have {self.model_evaluation_metric} metric logged."
+                    )
             else:
                 # todo
                 pass
         except mlflow.exceptions.RestException as e:
-            if "RESOURCE_DOES_NOT_EXIST" in str(e) or "Registered model not found" in str(e):
+            if "RESOURCE_DOES_NOT_EXIST" in str(
+                e
+            ) or "Registered model not found" in str(e):
                 # registered_model_name does not exist at all
                 print(f"model {self.model_name} not found")
             else:
