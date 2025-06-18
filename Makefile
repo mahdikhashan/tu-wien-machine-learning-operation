@@ -49,7 +49,9 @@ run-df-flow-needs-preprocessing-skewed:
 		--experiment_name "dtr_1_5_5_skewed"
 
 eval-a-b-test:
-	python pipelines/evaluate_A_B.py run --model_a_uri "models:/A_B_second_model/2" --model_b_uri "models:/A_B_control_model/1" \
+	python pipelines/evaluate_A_B.py run \ 
+		--model_a_uri "models:/A_B_second_model/2" \
+		--model_b_uri "models:/A_B_control_model/1" \
 		--dataset 'data/A_B_1.parquet'
 
 test-mlflow-access-on-local:
