@@ -1,0 +1,44 @@
+python pipelines/evaluate_experiment.py run --experiment_name "my-experiment-fault-tolerance" --dataset 'data/A_B_1.parquet'
+2025-06-18 20:10:15.707 Workflow starting (run-id 1750270215517668):
+2025-06-18 20:10:15.715 [1750270215517668/start/1 (pid 44676)] Task is starting.
+2025-06-18 20:10:16.895 [1750270215517668/start/1 (pid 44676)] <flow EvaluateExperimentFlow step start> failed:
+2025-06-18 20:10:16.898 [1750270215517668/start/1 (pid 44676)] Internal error
+2025-06-18 20:10:16.899 [1750270215517668/start/1 (pid 44676)] Traceback (most recent call last):
+2025-06-18 20:10:16.899 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/cli.py", line 619, in main
+2025-06-18 20:10:16.899 [1750270215517668/start/1 (pid 44676)] start(auto_envvar_prefix="METAFLOW", obj=state)
+2025-06-18 20:10:16.899 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/core.py", line 829, in __call__
+2025-06-18 20:10:16.899 [1750270215517668/start/1 (pid 44676)] return self.main(args, kwargs)
+2025-06-18 20:10:17.011 [1750270215517668/start/1 (pid 44676)] ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/core.py", line 782, in main
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] rv = self.invoke(ctx)
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] ^^^^^^^^^^^^^^^^
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/cli_components/utils.py", line 69, in invoke
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] return _process_result(sub_ctx.command.invoke(sub_ctx))
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/core.py", line 1066, in invoke
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] return ctx.invoke(self.callback, ctx.params)
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/core.py", line 610, in invoke
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] return callback(args, kwargs)
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] ^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/tracing/__init__.py", line 27, in wrapper_func
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] return func(args, kwargs)
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] ^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/decorators.py", line 21, in new_func
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] return f(get_current_context(), args, kwargs)
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/cli_components/step_cmd.py", line 167, in step
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] task.run_step(
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/task.py", line 672, in run_step
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] self._exec_step_function(step_func)
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/task.py", line 62, in _exec_step_function
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] step_function()
+2025-06-18 20:10:17.012 [1750270215517668/start/1 (pid 44676)] File "/Users/mahdikhashan/tmp/tu-mlops/pipelines/evaluate_experiment.py", line 23, in start
+2025-06-18 20:10:17.013 [1750270215517668/start/1 (pid 44676)] for rm in client.list_registered_models():
+2025-06-18 20:10:17.013 [1750270215517668/start/1 (pid 44676)] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 20:10:17.013 [1750270215517668/start/1 (pid 44676)] AttributeError: 'MlflowClient' object has no attribute 'list_registered_models'
+2025-06-18 20:10:17.013 [1750270215517668/start/1 (pid 44676)] 
+2025-06-18 20:10:17.013 [1750270215517668/start/1 (pid 44676)] Task failed.
+2025-06-18 20:10:17.014 Workflow failed.
+2025-06-18 20:10:17.014 Terminating 0 active tasks...
+2025-06-18 20:10:17.014 Flushing logs...
