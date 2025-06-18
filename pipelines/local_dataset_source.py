@@ -10,9 +10,9 @@ class CustomLocalDatasetSource(FileSystemDatasetSource):
     """
     A concrete implementation of FileSystemDatasetSource for local file paths.
     """
-    def __init__(self, path: str = ""):
-        self._path = os.path.abspath(path) if len(path) else path
-        if self._path:
+    def __init__(self, path: str, is_name: bool = True):
+        self._path = os.path.abspath(path) if not is_name else path
+        if not is_name:
             if not os.path.exists(self._path):
                 raise FileNotFoundError(f"Local dataset path not found: {self._path}")
 

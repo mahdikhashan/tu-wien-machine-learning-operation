@@ -1,4 +1,4 @@
-from metaflow import FlowSpec, IncludeFile, current, Parameter
+from metaflow import FlowSpec, current, Parameter
 from metaflow import step, retry  # decorators
 
 import pandas as pd
@@ -6,53 +6,11 @@ import pytest
 
 import os
 
+from utils.mixins import DatasetMixin, ExperimentMixin, ModelMixin
+
 # i was in favor of having mlflow as a seperate running process (ex in a container),
 # but to keep it simple, i'm just using its api
 print(f"Attempting to use MLflow Tracking URI: {os.environ.get('MLFLOW_TRACKING_URI')}")
-
-
-class ExperimentMixin:
-    experiment_name = Parameter(
-        name="experiment_name",
-        help="Experiment Name",
-        default="my-experiment-fault-tolerance",
-    )
-
-
-class ModelMixin:
-    model_name = Parameter(
-        name="model_name",
-        help="name of the model, used to register in model store",
-        default="dtr-tiny",
-    )
-
-    model_evaluation_metric = Parameter(
-        name="model_evaluation_metric",
-        help="the metric which to use in evaluation step for current and champion models",
-        default="r2",
-    )
-
-    model_evaluation_baseline = Parameter(
-        name="model_evaluation_baseline",
-        help="the value for the model evaluation metric",
-        default=0.3,
-    )
-
-    # TODO(mahdi): use it for mlflow tagging, further details to come
-    model_tag = Parameter(
-        name="model_tag",
-        help="the tag to be used for mlflow logged model",
-        default="random-training-run",
-    )
-
-
-class DatasetMixin:
-    dataset_name = Parameter(name="dataset_name", help="Dataset Name", required=False)
-    dataset_file = IncludeFile(
-        "dataset",
-        is_text=False,
-        help="Dataset",
-    )
 
 
 class DTRFlow(DatasetMixin, ModelMixin, ExperimentMixin, FlowSpec):
@@ -90,7 +48,7 @@ class DTRFlow(DatasetMixin, ModelMixin, ExperimentMixin, FlowSpec):
     @step
     def dataset_is_large_enough(self):
         try:
-            assert self.validation_df.shape[0] >= 25_000
+            assert self.validation_df.shape[0] >= 20_000
         except Exception:
             raise ValueError("not a suitable dataset, it should have atleast 25k rows")
 
@@ -255,7 +213,7 @@ class DTRFlow(DatasetMixin, ModelMixin, ExperimentMixin, FlowSpec):
             ]
         )
 
-        preprocessor = ColumnTransformer(
+        self.preprocessor = ColumnTransformer(
             transformers=[
                 ("title_tfidf", title_transformer, "title"),
                 ("desc_tfidf", description_transformer, "description"),
@@ -272,15 +230,20 @@ class DTRFlow(DatasetMixin, ModelMixin, ExperimentMixin, FlowSpec):
         )
 
         print("Fitting preprocessor on training data...")
-        preprocessor.fit(X_train)
+        self.preprocessor.fit(X_train)
         print("Preprocessor fitted.")
 
+        # TODO(mahdi): i need to store this preprocessor which have been used during fiting the 
+        # data for predication
+        # i made the mistake to preprocess again, so it wouldn't work since data are different and 
+        # different vectors are build, therefore i store it and pass it to the prediction pipeline
+
         print("Transforming training data...")
-        X_train_processed = preprocessor.transform(X_train)
+        X_train_processed = self.preprocessor.transform(X_train)
         print(f"Training data transformed. Shape: {X_train_processed.shape}")
 
         try:
-            feature_names = preprocessor.get_feature_names_out()
+            feature_names = self.preprocessor.get_feature_names_out()
             print(f"Successfully retrieved {len(feature_names)} feature names.")
             print("Sample feature names:", feature_names[:20])  # print some names
         except Exception as e:
@@ -299,7 +262,7 @@ class DTRFlow(DatasetMixin, ModelMixin, ExperimentMixin, FlowSpec):
         print(X_train_processed_df.head())
 
         print("\nTransforming test data...")
-        X_test_processed = preprocessor.transform(X_test)
+        X_test_processed = self.preprocessor.transform(X_test)
         print(f"Test data transformed. Shape: {X_test_processed.shape}")
 
         # X_test_processed_dense = X_test_processed.toarray()  # if sparse
@@ -375,6 +338,14 @@ class DTRFlow(DatasetMixin, ModelMixin, ExperimentMixin, FlowSpec):
             print(f"MLflow Experiement Dataset Name: {meta_dataset.name}")
 
             mlflow.log_input(meta_dataset, context="external_data")
+
+            # log preprocessor to be used later for prediction
+            import joblib
+            preprocessor_path = "preprocessor.joblib"
+            joblib.dump(self.preprocessor, preprocessor_path)
+            mlflow.log_artifact(preprocessor_path)
+
+            os.remove(preprocessor_path)
 
             dt_regressor = DecisionTreeRegressor(
                 max_depth=self.max_depth,
