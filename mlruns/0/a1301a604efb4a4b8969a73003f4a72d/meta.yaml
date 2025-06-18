@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/a1301a604efb4a4b8969a73003f4a72d/artifacts
+end_time: 1750264601115
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a1301a604efb4a4b8969a73003f4a72d
+run_name: rare-moose-842
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264601067
+status: 3
+tags: []
+user_id: mahdikhashan

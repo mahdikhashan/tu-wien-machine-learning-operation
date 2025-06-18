@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/ae7bd04f5d974dfdb39e33e207c6a0e6/artifacts
+end_time: 1750264426706
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ae7bd04f5d974dfdb39e33e207c6a0e6
+run_name: grandiose-sloth-779
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264426664
+status: 3
+tags: []
+user_id: mahdikhashan

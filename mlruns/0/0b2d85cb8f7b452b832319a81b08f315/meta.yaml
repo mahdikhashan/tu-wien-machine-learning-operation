@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/0b2d85cb8f7b452b832319a81b08f315/artifacts
+end_time: 1750263972336
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0b2d85cb8f7b452b832319a81b08f315
+run_name: languid-mare-438
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750263972323
+status: 3
+tags: []
+user_id: mahdikhashan

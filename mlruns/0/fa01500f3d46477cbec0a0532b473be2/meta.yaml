@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/fa01500f3d46477cbec0a0532b473be2/artifacts
+end_time: 1750264033816
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fa01500f3d46477cbec0a0532b473be2
+run_name: sassy-moose-178
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264033799
+status: 3
+tags: []
+user_id: mahdikhashan

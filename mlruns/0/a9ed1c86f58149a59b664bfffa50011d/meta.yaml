@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/a9ed1c86f58149a59b664bfffa50011d/artifacts
+end_time: 1750264033816
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a9ed1c86f58149a59b664bfffa50011d
+run_name: marvelous-asp-386
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264033799
+status: 3
+tags: []
+user_id: mahdikhashan

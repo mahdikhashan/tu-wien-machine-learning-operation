@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/687438433737605686/e6e77a6b75084816955be6952d9ec708/artifacts
+end_time: 1750170517218
+entry_point_name: ''
+experiment_id: '687438433737605686'
+lifecycle_stage: active
+run_id: e6e77a6b75084816955be6952d9ec708
+run_name: '1750170363750785'
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750170394653
+status: 3
+tags: []
+user_id: mahdikhashan

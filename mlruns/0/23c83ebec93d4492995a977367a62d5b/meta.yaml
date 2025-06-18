@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/23c83ebec93d4492995a977367a62d5b/artifacts
+end_time: 1750264218276
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 23c83ebec93d4492995a977367a62d5b
+run_name: angry-eel-618
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264218260
+status: 3
+tags: []
+user_id: mahdikhashan

@@ -1,5 +1,7 @@
 aliases: {}
-creation_timestamp: 1747939430246
+creation_timestamp: 1750170517208
+deployment_job_id: null
+deployment_job_state: null
 description: null
-last_updated_timestamp: 1747939932791
+last_updated_timestamp: 1750170521762
 name: dtr-tiny

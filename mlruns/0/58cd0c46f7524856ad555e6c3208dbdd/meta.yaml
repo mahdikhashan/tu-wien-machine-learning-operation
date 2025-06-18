@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/58cd0c46f7524856ad555e6c3208dbdd/artifacts
+end_time: 1750264259367
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 58cd0c46f7524856ad555e6c3208dbdd
+run_name: exultant-stork-332
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264259342
+status: 3
+tags: []
+user_id: mahdikhashan

@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/e6e2f10e2ca845b1a59c67f4399d5c7f/artifacts
+end_time: 1750264426706
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e6e2f10e2ca845b1a59c67f4399d5c7f
+run_name: rogue-seal-207
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264426664
+status: 3
+tags: []
+user_id: mahdikhashan

@@ -1,0 +1,10 @@
+artifact_location: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/687438433737605686/models/m-82616d41e9ee4cbea5f0a79451f7a68b/artifacts
+creation_timestamp: 1750263344622
+experiment_id: '687438433737605686'
+last_updated_timestamp: 1750263347452
+model_id: m-82616d41e9ee4cbea5f0a79451f7a68b
+model_type: null
+name: model
+source_run_id: a7fceef9fe4a42dfaee0a1f2140c1f25
+status: 2
+status_message: null

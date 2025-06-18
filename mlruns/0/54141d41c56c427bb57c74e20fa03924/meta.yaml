@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/54141d41c56c427bb57c74e20fa03924/artifacts
+end_time: 1750264601115
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 54141d41c56c427bb57c74e20fa03924
+run_name: learned-goat-467
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264601067
+status: 3
+tags: []
+user_id: mahdikhashan

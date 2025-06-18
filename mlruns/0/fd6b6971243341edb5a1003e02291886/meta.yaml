@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/fd6b6971243341edb5a1003e02291886/artifacts
+end_time: 1750264218276
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fd6b6971243341edb5a1003e02291886
+run_name: suave-swan-333
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264218260
+status: 3
+tags: []
+user_id: mahdikhashan

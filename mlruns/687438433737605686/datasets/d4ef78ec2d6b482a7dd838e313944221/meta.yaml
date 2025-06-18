@@ -1,0 +1,6 @@
+digest: 3a147be3
+name: data/data_train_features_need_preprocessing_salary_less_than_500k_and_above_1k.parquet
+profile: null
+schema: null
+source: '{"path": "/Users/mahdikhashan/tmp/tu-mlops/data/data_train_features_need_preprocessing_salary_less_than_500k_and_above_1k.parquet"}'
+source_type: custom_local_fs

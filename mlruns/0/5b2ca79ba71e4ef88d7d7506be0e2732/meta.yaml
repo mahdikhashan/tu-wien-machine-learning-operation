@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/5b2ca79ba71e4ef88d7d7506be0e2732/artifacts
+end_time: 1750264259367
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 5b2ca79ba71e4ef88d7d7506be0e2732
+run_name: suave-zebra-884
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264259342
+status: 3
+tags: []
+user_id: mahdikhashan

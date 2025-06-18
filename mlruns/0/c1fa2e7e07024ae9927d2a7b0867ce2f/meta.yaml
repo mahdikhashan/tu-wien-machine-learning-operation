@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/mahdikhashan/tmp/tu-mlops/mlruns/0/c1fa2e7e07024ae9927d2a7b0867ce2f/artifacts
+end_time: 1750264763264
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c1fa2e7e07024ae9927d2a7b0867ce2f
+run_name: agreeable-zebra-181
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750264763245
+status: 3
+tags: []
+user_id: mahdikhashan

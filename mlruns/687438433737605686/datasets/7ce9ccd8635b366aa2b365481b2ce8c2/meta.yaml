@@ -1,0 +1,6 @@
+digest: da329377
+name: linkedin_joblist_salary_less_than_500k_and_above_1k
+profile: null
+schema: null
+source: '{"path": "linkedin_joblist_salary_less_than_500k_and_above_1k"}'
+source_type: custom_local_fs
