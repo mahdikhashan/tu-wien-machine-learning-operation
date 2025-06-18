@@ -1,0 +1,117 @@
+python pipelines/evaluate_A_B.py run --model_a_uri "models:/A_B_second_model/2" --model_b_uri "models:/A_B_control_model/1" \
+		--dataset 'data/train.parquet'
+2025-06-18 18:44:07.926 Workflow starting (run-id 1750265046351895):
+2025-06-18 18:44:07.940 [1750265046351895/start/1 (pid 31474)] Task is starting.
+2025-06-18 18:44:08.211 [1750265046351895/start/1 (pid 31474)] Task finished successfully.
+2025-06-18 18:44:08.217 [1750265046351895/load_dataset/2 (pid 31504)] Task is starting.
+2025-06-18 18:44:09.182 [1750265046351895/load_dataset/2 (pid 31504)] Loading dataset from IncludeFile: 52966323
+2025-06-18 18:44:09.397 [1750265046351895/load_dataset/2 (pid 31504)] Dataset loaded successfully. Shape: (23101, 10)
+2025-06-18 18:44:09.397 [1750265046351895/load_dataset/2 (pid 31504)] ['company_name', 'title', 'description', 'max_salary', 'pay_period', 'location', 'min_salary', 'remote_allowed', 'work_type', 'normalized_salary']
+2025-06-18 18:44:09.397 [1750265046351895/load_dataset/2 (pid 31504)] First 5 rows sample:
+2025-06-18 18:44:09.411 [1750265046351895/load_dataset/2 (pid 31504)] company_name  ... normalized_salary
+2025-06-18 18:44:09.769 [1750265046351895/load_dataset/2 (pid 31504)] 0                       Strategic Staffing Solutions  ...           68640.0
+2025-06-18 18:44:09.770 [1750265046351895/load_dataset/2 (pid 31504)] 1                                          Cognizant  ...          154450.0
+2025-06-18 18:44:09.770 [1750265046351895/load_dataset/2 (pid 31504)] 2                                      Allen & Overy  ...          110000.0
+2025-06-18 18:44:09.770 [1750265046351895/load_dataset/2 (pid 31504)] 3                                 ISITE TECHNOLOGIES  ...           88400.0
+2025-06-18 18:44:09.770 [1750265046351895/load_dataset/2 (pid 31504)] 4  Siemens EDA (Siemens Digital Industries Software)  ...          203550.0
+2025-06-18 18:44:09.770 [1750265046351895/load_dataset/2 (pid 31504)] 
+2025-06-18 18:44:09.770 [1750265046351895/load_dataset/2 (pid 31504)] [5 rows x 10 columns]
+2025-06-18 18:44:09.772 [1750265046351895/load_dataset/2 (pid 31504)] Task finished successfully.
+2025-06-18 18:44:09.778 [1750265046351895/validate_dataset/3 (pid 31511)] Task is starting.
+2025-06-18 18:44:10.345 [1750265046351895/validate_dataset/3 (pid 31511)] Attempting to add project root to sys.path: /Users/mahdikhashan/tmp/tu-mlops
+2025-06-18 18:44:10.346 [1750265046351895/validate_dataset/3 (pid 31511)] '/Users/mahdikhashan/tmp/tu-mlops' added to sys.path.
+2025-06-18 18:44:10.346 [1750265046351895/validate_dataset/3 (pid 31511)] ****************************************
+2025-06-18 18:44:10.346 [1750265046351895/validate_dataset/3 (pid 31511)] Attempting validation setup...
+2025-06-18 18:44:10.346 [1750265046351895/validate_dataset/3 (pid 31511)] ****************************************
+2025-06-18 18:44:10.346 [1750265046351895/validate_dataset/3 (pid 31511)] Successfully imported test fixture setup from tests.conftest.
+2025-06-18 18:44:10.604 [1750265046351895/validate_dataset/3 (pid 31511)] Passing DataFrame to fixture setup mechanism...
+2025-06-18 18:44:10.604 [1750265046351895/validate_dataset/3 (pid 31511)] ****************************************
+2025-06-18 18:44:10.604 [1750265046351895/validate_dataset/3 (pid 31511)] Debug log - First row's title:
+2025-06-18 18:44:10.604 [1750265046351895/validate_dataset/3 (pid 31511)] Brokerage Escalation Representatives (Series 7 Required)
+2025-06-18 18:44:10.662 [1750265046351895/validate_dataset/3 (pid 31511)] ****************************************
+2025-06-18 18:44:10.662 [1750265046351895/validate_dataset/3 (pid 31511)] Running pytest on directory: /Users/mahdikhashan/tmp/tu-mlops/tests
+2025-06-18 18:44:10.662 [1750265046351895/validate_dataset/3 (pid 31511)] ============================= test session starts ==============================
+2025-06-18 18:44:10.663 [1750265046351895/validate_dataset/3 (pid 31511)] platform darwin -- Python 3.11.10, pytest-8.3.2, pluggy-1.6.0 -- /Users/mahdikhashan/tmp/tu-mlops/.venv/bin/python
+2025-06-18 18:44:10.663 [1750265046351895/validate_dataset/3 (pid 31511)] cachedir: .pytest_cache
+2025-06-18 18:44:10.663 [1750265046351895/validate_dataset/3 (pid 31511)] rootdir: /Users/mahdikhashan/tmp/tu-mlops
+2025-06-18 18:44:10.663 [1750265046351895/validate_dataset/3 (pid 31511)] configfile: pyproject.toml
+2025-06-18 18:44:10.663 [1750265046351895/validate_dataset/3 (pid 31511)] plugins: anyio-4.9.0
+2025-06-18 18:44:12.123 [1750265046351895/validate_dataset/3 (pid 31511)] collecting ... 1.3.11
+2025-06-18 18:44:12.131 [1750265046351895/validate_dataset/3 (pid 31511)] collected 5 items
+2025-06-18 18:44:12.132 [1750265046351895/validate_dataset/3 (pid 31511)] 
+2025-06-18 18:44:12.661 [1750265046351895/validate_dataset/3 (pid 31511)] Calculating Metrics:   0%|          | 0/8 [00:00<?, ?it/s]Calculating Metrics:   0%|          | 0/8 [00:00<?, ?it/s]Calculating Metrics:  25%|██▌       | 2/8 [00:00<00:00, 2032.12it/s]Calculating Metrics:  25%|██▌       | 2/8 [00:00<00:00, 1662.43it/s]Calculating Metrics:  38%|███▊      | 3/8 [00:00<00:00, 2331.03it/s]Calculating Metrics:  38%|███▊      | 3/8 [00:00<00:00, 2262.71it/s]Calculating Metrics:  50%|█████     | 4/8 [00:00<00:00, 1548.57it/s]Calculating Metrics:  50%|█████     | 4/8 [00:00<00:00, 1506.03it/s]Calculating Metrics: 100%|██████████| 8/8 [00:00<00:00, 1975.88it/s]Calculating Metrics: 100%|██████████| 8/8 [00:00<00:00, 1946.88it/s]Calculating Metrics: 100%|██████████| 8/8 [00:00<00:00, 1931.86it/s]Calculating Metrics: 100%|██████████| 8/8 [00:00<00:00, 1878.75it/s]
+2025-06-18 18:44:12.666 [1750265046351895/validate_dataset/3 (pid 31511)] tests/test_validate_dataset.py::test_validate_no_missing_values_in_title PASSED
+2025-06-18 18:44:13.053 [1750265046351895/validate_dataset/3 (pid 31511)] Calculating Metrics:   0%|          | 0/13 [00:00<?, ?it/s]Calculating Metrics:   0%|          | 0/13 [00:00<?, ?it/s]Calculating Metrics:  15%|█▌        | 2/13 [00:00<00:00, 15978.30it/s]Calculating Metrics:  15%|█▌        | 2/13 [00:00<00:00, 11110.74it/s]Calculating Metrics:  23%|██▎       | 3/13 [00:00<00:00, 14347.68it/s]Calculating Metrics:  23%|██▎       | 3/13 [00:00<00:00, 12145.67it/s]Calculating Metrics:  38%|███▊      | 5/13 [00:00<00:00, 2918.79it/s] Calculating Metrics:  38%|███▊      | 5/13 [00:00<00:00, 2839.36it/s]Calculating Metrics: 100%|██████████| 13/13 [00:00<00:00, 5664.45it/s]Calculating Metrics: 100%|██████████| 13/13 [00:00<00:00, 5576.96it/s]Calculating Metrics: 100%|██████████| 13/13 [00:00<00:00, 5527.21it/s]Calculating Metrics: 100%|██████████| 13/13 [00:00<00:00, 5452.60it/s]
+2025-06-18 18:44:13.057 [1750265046351895/validate_dataset/3 (pid 31511)] tests/test_validate_dataset.py::test_validate_no_missing_values_in_description PASSED
+2025-06-18 18:44:13.393 [1750265046351895/validate_dataset/3 (pid 31511)] tests/test_validate_dataset.py::test_validate_max_salary_in_range PASSED
+2025-06-18 18:44:13.393 [1750265046351895/validate_dataset/3 (pid 31511)] Calculating Metrics:   0%|          | 0/4 [00:00<?, ?it/s]Calculating Metrics:   0%|          | 0/4 [00:00<?, ?it/s]Calculating Metrics:  50%|█████     | 2/4 [00:00<00:00, 19065.02it/s]Calculating Metrics:  50%|█████     | 2/4 [00:00<00:00, 14193.92it/s]Calculating Metrics:  75%|███████▌  | 3/4 [00:00<00:00, 17873.45it/s]Calculating Metrics:  75%|███████▌  | 3/4 [00:00<00:00, 15947.92it/s]Calculating Metrics: 100%|██████████| 4/4 [00:00<00:00, 12738.96it/s]Calculating Metrics: 100%|██████████| 4/4 [00:00<00:00, 11765.23it/s]Calculating Metrics: 100%|██████████| 4/4 [00:00<00:00, 11199.74it/s]Calculating Metrics: 100%|██████████| 4/4 [00:00<00:00, 10420.63it/s]
+2025-06-18 18:44:13.725 [1750265046351895/validate_dataset/3 (pid 31511)] Calculating Metrics:   0%|          | 0/5 [00:00<?, ?it/s]Calculating Metrics:   0%|          | 0/5 [00:00<?, ?it/s]Calculating Metrics:  40%|████      | 2/5 [00:00<00:00, 15738.48it/s]Calculating Metrics:  40%|████      | 2/5 [00:00<00:00, 11831.61it/s]Calculating Metrics:  60%|██████    | 3/5 [00:00<00:00, 14997.51it/s]Calculating Metrics:  60%|██████    | 3/5 [00:00<00:00, 13107.20it/s]Calculating Metrics: 100%|██████████| 5/5 [00:00<00:00, 13332.18it/s]Calculating Metrics: 100%|██████████| 5/5 [00:00<00:00, 12468.20it/s]Calculating Metrics: 100%|██████████| 5/5 [00:00<00:00, 11908.87it/s]Calculating Metrics: 100%|██████████| 5/5 [00:00<00:00, 11107.80it/s]
+2025-06-18 18:44:13.727 [1750265046351895/validate_dataset/3 (pid 31511)] tests/test_validate_dataset.py::test_validate_min_salary_in_range PASSED
+2025-06-18 18:44:14.061 [1750265046351895/validate_dataset/3 (pid 31511)] Calculating Metrics:   0%|          | 0/4 [00:00<?, ?it/s]Calculating Metrics:   0%|          | 0/4 [00:00<?, ?it/s]Calculating Metrics:  50%|█████     | 2/4 [00:00<00:00, 17586.18it/s]Calculating Metrics:  50%|█████     | 2/4 [00:00<00:00, 13066.37it/s]Calculating Metrics:  75%|███████▌  | 3/4 [00:00<00:00, 16688.21it/s]Calculating Metrics:  75%|███████▌  | 3/4 [00:00<00:00, 14855.86it/s]Calculating Metrics: 100%|██████████| 4/4 [00:00<00:00, 1393.80it/s] Calculating Metrics: 100%|██████████| 4/4 [00:00<00:00, 1373.16it/s]Calculating Metrics: 100%|██████████| 4/4 [00:00<00:00, 1361.01it/s]Calculating Metrics: 100%|██████████| 4/4 [00:00<00:00, 1346.38it/s]
+2025-06-18 18:44:14.063 [1750265046351895/validate_dataset/3 (pid 31511)] tests/test_validate_dataset.py::test_validate_column_values_in_list PASSED
+2025-06-18 18:44:14.063 [1750265046351895/validate_dataset/3 (pid 31511)] 
+2025-06-18 18:44:14.063 [1750265046351895/validate_dataset/3 (pid 31511)] =============================== warnings summary ===============================
+2025-06-18 18:44:14.063 [1750265046351895/validate_dataset/3 (pid 31511)] .venv/lib/python3.11/site-packages/great_expectations/data_context/types/base.py:1095
+2025-06-18 18:44:14.064 [1750265046351895/validate_dataset/3 (pid 31511)] /Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/great_expectations/data_context/types/base.py:1095: ChangedInMarshmallow4Warning: `Number` field should not be instantiated. Use `Integer`, `Float`, or `Decimal` instead.
+2025-06-18 18:44:14.064 [1750265046351895/validate_dataset/3 (pid 31511)] config_version: fields.Number = fields.Number(
+2025-06-18 18:44:14.064 [1750265046351895/validate_dataset/3 (pid 31511)] 
+2025-06-18 18:44:14.064 [1750265046351895/validate_dataset/3 (pid 31511)] -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2025-06-18 18:44:14.064 [1750265046351895/validate_dataset/3 (pid 31511)] ========================= 5 passed, 1 warning in 3.40s =========================
+2025-06-18 18:44:14.064 [1750265046351895/validate_dataset/3 (pid 31511)] Pytest validation successful!
+2025-06-18 18:44:14.589 [1750265046351895/validate_dataset/3 (pid 31511)] Foreach yields 2 child steps.
+2025-06-18 18:44:14.589 [1750265046351895/validate_dataset/3 (pid 31511)] Task finished successfully.
+2025-06-18 18:44:14.595 [1750265046351895/predict/4 (pid 31523)] Task is starting.
+2025-06-18 18:44:14.598 [1750265046351895/predict/5 (pid 31524)] Task is starting.
+2025-06-18 18:44:17.831 [1750265046351895/predict/5 (pid 31524)] Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 13888.42it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 7410.43it/s]
+2025-06-18 18:44:17.832 [1750265046351895/predict/4 (pid 31523)] Downloading artifacts:   0%|          | 0/1 [00:00<?, ?it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 11491.24it/s]Downloading artifacts: 100%|██████████| 1/1 [00:00<00:00, 6853.44it/s]
+2025-06-18 18:44:17.839 [1750265046351895/predict/5 (pid 31524)] Artifacts downloaded to: /Users/mahdikhashan/tmp/tu-mlops/downloaded_artifacts/preprocessor.joblib
+2025-06-18 18:44:17.839 [1750265046351895/predict/4 (pid 31523)] Artifacts downloaded to: /Users/mahdikhashan/tmp/tu-mlops/downloaded_artifacts/preprocessor.joblib
+2025-06-18 18:44:18.111 [1750265046351895/predict/4 (pid 31523)] Task finished successfully.
+2025-06-18 18:44:18.111 [1750265046351895/predict/5 (pid 31524)] Task finished successfully.
+2025-06-18 18:44:18.116 [1750265046351895/join/6 (pid 31550)] Task is starting.
+2025-06-18 18:44:18.286 [1750265046351895/join/6 (pid 31550)] <flow Evaluate_A_B_Flow step join> failed:
+2025-06-18 18:44:18.290 [1750265046351895/join/6 (pid 31550)] Internal error
+2025-06-18 18:44:18.293 [1750265046351895/join/6 (pid 31550)] Traceback (most recent call last):
+2025-06-18 18:44:18.293 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/cli.py", line 619, in main
+2025-06-18 18:44:18.293 [1750265046351895/join/6 (pid 31550)] start(auto_envvar_prefix="METAFLOW", obj=state)
+2025-06-18 18:44:18.293 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/core.py", line 829, in __call__
+2025-06-18 18:44:18.293 [1750265046351895/join/6 (pid 31550)] return self.main(args, kwargs)
+2025-06-18 18:44:18.313 [1750265046351895/join/6 (pid 31550)] ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/core.py", line 782, in main
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] rv = self.invoke(ctx)
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] ^^^^^^^^^^^^^^^^
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/cli_components/utils.py", line 69, in invoke
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] return _process_result(sub_ctx.command.invoke(sub_ctx))
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/core.py", line 1066, in invoke
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] return ctx.invoke(self.callback, ctx.params)
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/core.py", line 610, in invoke
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] return callback(args, kwargs)
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] ^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/tracing/__init__.py", line 27, in wrapper_func
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] return func(args, kwargs)
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] ^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/_vendor/click/decorators.py", line 21, in new_func
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] return f(get_current_context(), args, kwargs)
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/cli_components/step_cmd.py", line 167, in step
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] task.run_step(
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/task.py", line 670, in run_step
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] self._exec_step_function(step_func, input_obj)
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/task.py", line 64, in _exec_step_function
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] step_function(input_obj)
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/pipelines/evaluate_A_B.py", line 186, in join
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] self.results = [input.metric for input in inputs]
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/pipelines/evaluate_A_B.py", line 186, in <listcomp>
+2025-06-18 18:44:18.314 [1750265046351895/join/6 (pid 31550)] self.results = [input.metric for input in inputs]
+2025-06-18 18:44:18.315 [1750265046351895/join/6 (pid 31550)] ^^^^^^^^^^^^
+2025-06-18 18:44:18.315 [1750265046351895/join/6 (pid 31550)] File "/Users/mahdikhashan/tmp/tu-mlops/.venv/lib/python3.11/site-packages/metaflow/flowspec.py", line 445, in __getattr__
+2025-06-18 18:44:18.315 [1750265046351895/join/6 (pid 31550)] raise AttributeError("Flow %s has no attribute '%s'" % (self.name, name))
+2025-06-18 18:44:18.315 [1750265046351895/join/6 (pid 31550)] AttributeError: Flow Evaluate_A_B_Flow has no attribute 'metric'
+2025-06-18 18:44:18.315 [1750265046351895/join/6 (pid 31550)] 
+2025-06-18 18:44:18.315 [1750265046351895/join/6 (pid 31550)] Task failed.
+2025-06-18 18:44:18.315 Workflow failed.
+2025-06-18 18:44:18.315 Terminating 0 active tasks...
+2025-06-18 18:44:18.315 Flushing logs...

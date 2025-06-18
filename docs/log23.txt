@@ -1,0 +1,2 @@
+python pipelines/evaluate_A_B.py run --model_a_uri "models:/A_B_second_model/2" --model_b_uri "models:/dtr-A_B_control_model/1" \
+		--dataset 'data/train.parquet'
