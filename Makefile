@@ -54,6 +54,9 @@ eval-a-b-test:
 		--model_b_uri "models:/A_B_control_model/1" \
 		--dataset 'data/A_B_1.parquet'
 
+eval-exp-test:
+	python pipelines/evaluate_experiment.py run --experiment_name "my-experiment-fault-tolerance" --dataset 'data/A_B_1.parquet'
+
 test-mlflow-access-on-local:
 	python tests/test_mlflow_local.py
 
